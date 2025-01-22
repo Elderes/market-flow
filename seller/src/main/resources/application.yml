@@ -1,0 +1,23 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: seller
+  
+  datasource:
+    url: jdbc:mysql://localhost:3306/seller
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+  
+  rabbitmq:
+    host: jackal.rmq.cloudamqp.com
+    port: 5672
+    username: wlauucvv
+    password: tOvqjNjN_-RGZW4PvqlmZIk1Dlkr3Zm_
+    virtual-host: wlauucvv
