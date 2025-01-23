@@ -5,18 +5,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProductsListProducer {
+public class RequestProductsListProducer {
 
-    final RabbitTemplate rabbitTemplate;
+    private final RabbitTemplate rabbitTemplate;
 
-    public ProductsListProducer(RabbitTemplate rabbitTemplate) {
+    public RequestProductsListProducer(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    @Value("${broker.exchange.request.list.products.name}")
+    @Value("${exchange-direct}")
     private String exchangeName;
 
-    @Value("${routing.key}")
+    @Value("${routing.key.request.products}")
     private String routingKey;
 
     public void publishMessage(String message) {

@@ -4,6 +4,7 @@ import com.accenture_projeto.buyer.dtos.BuyerRecordDto;
 import com.accenture_projeto.buyer.dtos.MessageRecordDto;
 import com.accenture_projeto.buyer.models.AddressModel;
 import com.accenture_projeto.buyer.models.BuyerModel;
+import com.accenture_projeto.buyer.models.ProductModel;
 import com.accenture_projeto.buyer.services.BuyerService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class BuyerController {
@@ -30,6 +35,12 @@ public class BuyerController {
     @PostMapping("/request-products")
     public ResponseEntity<?> requestProducts(@RequestBody @Valid MessageRecordDto messageRecordDto) {
         buyerService.requestProductList(messageRecordDto.message());
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PostMapping("/send-products")
+    public ResponseEntity<?> sendProducts() {
+        buyerService.sendProducts();
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
