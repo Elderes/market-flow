@@ -1,6 +1,7 @@
 package com.accenture_projeto.buyer.controllers;
 
 import com.accenture_projeto.buyer.dtos.BuyerRecordDto;
+import com.accenture_projeto.buyer.dtos.MessageRecordDto;
 import com.accenture_projeto.buyer.models.AddressModel;
 import com.accenture_projeto.buyer.models.BuyerModel;
 import com.accenture_projeto.buyer.services.BuyerService;
@@ -27,8 +28,8 @@ public class BuyerController {
     }
 
     @PostMapping("/request-products")
-    public ResponseEntity<?> requestProducts() {
-        buyerService.requestProductList("Teste");
+    public ResponseEntity<?> requestProducts(@RequestBody @Valid MessageRecordDto messageRecordDto) {
+        buyerService.requestProductList(messageRecordDto.message());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

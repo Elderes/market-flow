@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ListProductsConsumer {
-    @RabbitListener(queues = "${broker.queue.request.list.products.name}")
+    @RabbitListener(queues = "${}") // TODO: colocar a fila que abraao vai fazer
     public void listenProducts(@Payload String products) {
         System.out.println(products);
     }
