@@ -24,7 +24,7 @@ public class ProductModel implements Serializable {
     private String description;
 
     @Column(nullable = false)
-    private Double quantity;
+    private Integer quantity;
 
     @Column(nullable = false)
     private BigDecimal price;
@@ -53,11 +53,11 @@ public class ProductModel implements Serializable {
         this.description = description;
     }
 
-    public Double getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Double quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
