@@ -7,11 +7,20 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import com.accenture_projeto.seller.dto.ProductModelDTO;
+
 @Entity
 @Table(name = "tb_product")
 @Data
 public class ProductModel implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    public ProductModel(ProductModelDTO dto) {
+        this.name = dto.getName();
+        this.description = dto.getDescription();
+        this.quantity = dto.getQuantity();
+        this.price = dto.getPrice();
+    };
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

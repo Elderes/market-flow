@@ -6,11 +6,20 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.UUID;
 
+import com.accenture_projeto.seller.dto.BuyerModelDTO;
+
 @Entity
 @Table(name = "tb_buyer")
 @Data
 public class BuyerModel implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    public BuyerModel(BuyerModelDTO dto) {
+        this.name = dto.getName();
+        this.email = dto.getEmail();
+        this.address = new AddressModel(dto.getAddress());
+        this.cellphone = dto.getCellphone();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
