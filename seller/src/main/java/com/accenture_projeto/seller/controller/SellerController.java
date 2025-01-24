@@ -9,10 +9,10 @@ import com.accenture_projeto.seller.service.ProductSender;
 
 @RestController
 @RequestMapping("/team_3/seller")
-public class ProductController {
+public class SellerController {
     private final ProductSender productSender;
 
-    public ProductController(ProductSender productSender) {
+    public SellerController(ProductSender productSender) {
         this.productSender = productSender;
     }
     

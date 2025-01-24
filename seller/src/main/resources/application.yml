@@ -17,7 +17,31 @@ spring:
   
   rabbitmq:
     host: jackal.rmq.cloudamqp.com
-    port: 5672
+    port: 5673
     username: wlauucvv
     password: tOvqjNjN_-RGZW4PvqlmZIk1Dlkr3Zm_
     virtual-host: wlauucvv
+
+request:
+  products:
+    queue: request-products-queue
+    
+products:
+  list:
+    queue: products-list-queue
+
+send:
+  order:
+    queue: end-order-queue
+
+routing:
+  key:
+    products:
+      list: key-2
+    request:
+      products: key-1
+    send:
+      order: key-03
+
+exchange:
+  direct: my-exchange-direct

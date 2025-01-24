@@ -15,7 +15,7 @@ import lombok.Data;
 @Entity
 @Table(name = "tb_seller")
 @Data
-public class Seller {
+public class SellerModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -25,5 +25,5 @@ public class Seller {
     private String name;
 
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Product> products;
+    private List<ProductModel> products;
 }
