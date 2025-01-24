@@ -15,7 +15,7 @@ public class SellerProducer {
     @Value("${products.list.queue}")
     private String productsListQueue;
 
-    @Value("${routing.key.list}")
+    @Value("${routing.key.products.list}")
     private String routingKeyList;
 
     @Autowired

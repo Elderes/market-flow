@@ -18,7 +18,7 @@ spring:
   
   rabbitmq:
     host: jackal.rmq.cloudamqp.com
-    port: 5673
+    port: 5672
     username: wlauucvv
     password: tOvqjNjN_-RGZW4PvqlmZIk1Dlkr3Zm_
     virtual-host: wlauucvv
