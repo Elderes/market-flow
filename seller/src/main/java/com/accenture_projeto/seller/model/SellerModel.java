@@ -1,5 +1,6 @@
 package com.accenture_projeto.seller.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -15,7 +16,7 @@ import lombok.Data;
 @Entity
 @Table(name = "tb_seller")
 @Data
-public class SellerModel {
+public class SellerModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column

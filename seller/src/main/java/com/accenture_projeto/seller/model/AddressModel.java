@@ -9,7 +9,6 @@ import java.util.UUID;
 import com.accenture_projeto.seller.dto.AddressModelDTO;
 
 @Entity
-@Table(name = "tb_address")
 @Data
 public class AddressModel implements Serializable {
     private static final long serialVersionUID = 1L;

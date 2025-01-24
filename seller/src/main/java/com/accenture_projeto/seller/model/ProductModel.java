@@ -2,6 +2,7 @@ package com.accenture_projeto.seller.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -12,6 +13,7 @@ import com.accenture_projeto.seller.dto.ProductModelDTO;
 @Entity
 @Table(name = "tb_product")
 @Data
+@NoArgsConstructor
 public class ProductModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -23,7 +25,7 @@ public class ProductModel implements Serializable {
     };
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
 
     @Column(nullable = false)

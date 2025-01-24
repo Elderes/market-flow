@@ -2,6 +2,7 @@ package com.accenture_projeto.seller.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -11,6 +12,7 @@ import com.accenture_projeto.seller.dto.BuyerModelDTO;
 @Entity
 @Table(name = "tb_buyer")
 @Data
+@NoArgsConstructor
 public class BuyerModel implements Serializable {
     private static final long serialVersionUID = 1L;
 

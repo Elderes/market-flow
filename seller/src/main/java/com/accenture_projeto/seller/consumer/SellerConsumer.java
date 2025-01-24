@@ -1,6 +1,5 @@
 package com.accenture_projeto.seller.consumer;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -21,7 +20,7 @@ public class SellerConsumer {
     @RabbitListener(queues = "${request.products.queue}")
     public void sendProductList(String message) {
         productSender.sendProductList();
-        System.out.println("Sent products list!");
+        System.out.println(message);
     }
 
     @RabbitListener(queues = "${send.order.queue}")
