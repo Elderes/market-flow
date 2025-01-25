@@ -13,15 +13,20 @@ public class StockConsumer {
     @Autowired
     private StockService service;
 
-    @RabbitListener(queues = "#{stockOrderQueue}")
+    @RabbitListener(queues = "${rabbitmq.queue.stock.order}")
     public void receiveOrder(OrderRecordDTO order) {
+        System.out.println("Listener.");
         List<Product> products = service.mapProducts(order.products());
+        System.out.println(products);
         if (service.checkIfAvailable(products)) {
             // Foward to payment
+            System.out.println(order.client().name());
+            System.out.println("Products available.");
         }
         else
         {
             // Queue to stock unavailable
+            System.out.println("Products unavailable.");
         }
     }
 }
