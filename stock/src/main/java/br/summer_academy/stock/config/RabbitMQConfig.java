@@ -1,70 +1,89 @@
 package br.summer_academy.stock.config;
 
 import org.springframework.amqp.core.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
 
-    // Exchange Definitions
-    private static final String EXCHANGE_DIRECT = "exchange.direct";
-    private static final String EXCHANGE_FANOUT = "exchange.fanout";
+    @Value("${rabbitmq.exchange.direct}")
+    private String directExchange;
 
-    // Queue Definitions
-    private static final String QUEUE_STOCK_ORDER = "queue.stock.order";
-    private static final String QUEUE_PAYMENT_ORDER = "queue.payment.order";
-    private static final String QUEUE_PAYMENT_STOCK = "queue.payment.stock";
-    private static final String QUEUE_ORDER_PAYMENT = "queue.order.payment";
-    private static final String QUEUE_SEND_PAYMENT = "queue.send.payment";
-    private static final String QUEUE_PAYMENT_SEND = "queue.payment.send";
+    @Value("${rabbitmq.exchange.fanout}")
+    private String fanoutExchange;
 
-    // Routing Keys
-    private static final String ROUTING_KEY_STOCK_TO_PAYMENT = "stock.to.payment";
-    private static final String ROUTING_KEY_PAYMENT_TO_ORDER = "payment.to.order";
-    private static final String ROUTING_KEY_PAYMENT_TO_SEND = "payment.to.send";
-    private static final String ROUTING_KEY_SEND_TO_PAYMENT = "send.to.payment";
+    @Value("${rabbitmq.queue.stock.order}")
+    private String stockOrderQueue;
+
+    @Value("${rabbitmq.queue.payment.order}")
+    private String paymentOrderQueue;
+
+    @Value("${rabbitmq.queue.payment.stock}")
+    private String paymentStockQueue;
+
+    @Value("${rabbitmq.queue.order.payment}")
+    private String orderPaymentQueue;
+
+    @Value("${rabbitmq.queue.send.payment}")
+    private String sendPaymentQueue;
+
+    @Value("${rabbitmq.queue.payment.send}")
+    private String paymentSendQueue;
+
+    @Value("${rabbitmq.routing.stock.to.payment}")
+    private String routingKeyStockToPayment;
+
+    @Value("${rabbitmq.routing.payment.to.order}")
+    private String routingKeyPaymentToOrder;
+
+    @Value("${rabbitmq.routing.payment.to.send}")
+    private String routingKeyPaymentToSend;
+
+    @Value("${rabbitmq.routing.send.to.payment}")
+    private String routingKeySendToPayment;
 
     // Define Exchanges
     @Bean
     public DirectExchange stockPaymentExchange() {
-        return new DirectExchange(EXCHANGE_DIRECT);
+        return new DirectExchange(directExchange);
     }
 
     @Bean
     public FanoutExchange orderBroadcastExchange() {
-        return new FanoutExchange(EXCHANGE_FANOUT);
+        return new FanoutExchange(fanoutExchange);
     }
 
     // Define Queues
     @Bean
     public Queue stockOrderQueue() {
-        return new Queue(QUEUE_STOCK_ORDER, true);
+        return new Queue(stockOrderQueue, true);
     }
 
     @Bean
     public Queue paymentOrderQueue() {
-        return new Queue(QUEUE_PAYMENT_ORDER, true);
+        return new Queue(paymentOrderQueue, true);
     }
 
     @Bean
     public Queue paymentStockQueue() {
-        return new Queue(QUEUE_PAYMENT_STOCK, true);
+        return new Queue(paymentStockQueue, true);
     }
 
     @Bean
     public Queue orderPaymentQueue() {
-        return new Queue(QUEUE_ORDER_PAYMENT, true);
+        return new Queue(orderPaymentQueue, true);
     }
 
     @Bean
     public Queue sendPaymentQueue() {
-        return new Queue(QUEUE_SEND_PAYMENT, true);
+        return new Queue(sendPaymentQueue, true);
     }
 
     @Bean
     public Queue paymentSendQueue() {
-        return new Queue(QUEUE_PAYMENT_SEND, true);
+        return new Queue(paymentSendQueue, true);
     }
 
     // Bindings (link queues to exchanges with routing keys)
@@ -80,21 +99,21 @@ public class RabbitMQConfig {
 
     @Bean
     public Binding bindPaymentStockQueue(DirectExchange stockPaymentExchange) {
-        return BindingBuilder.bind(paymentStockQueue()).to(stockPaymentExchange).with(ROUTING_KEY_STOCK_TO_PAYMENT);
+        return BindingBuilder.bind(paymentStockQueue()).to(stockPaymentExchange).with(routingKeyStockToPayment);
     }
 
     @Bean
     public Binding bindOrderPaymentQueue(DirectExchange stockPaymentExchange) {
-        return BindingBuilder.bind(orderPaymentQueue()).to(stockPaymentExchange).with(ROUTING_KEY_PAYMENT_TO_ORDER);
+        return BindingBuilder.bind(orderPaymentQueue()).to(stockPaymentExchange).with(routingKeyPaymentToOrder);
     }
 
     @Bean
-    public Binding bindSendPaymentQueue(DirectExchange paymentSendExchange) {
-        return BindingBuilder.bind(sendPaymentQueue()).to(paymentSendExchange).with(ROUTING_KEY_PAYMENT_TO_SEND);
+    public Binding bindSendPaymentQueue(DirectExchange stockPaymentExchange) {
+        return BindingBuilder.bind(sendPaymentQueue()).to(stockPaymentExchange).with(routingKeyPaymentToSend);
     }
 
     @Bean
-    public Binding bindPaymentSendQueue(DirectExchange sendConfirmationExchange) {
-        return BindingBuilder.bind(paymentSendQueue()).to(sendConfirmationExchange).with(ROUTING_KEY_SEND_TO_PAYMENT);
+    public Binding bindPaymentSendQueue(DirectExchange stockPaymentExchange) {
+        return BindingBuilder.bind(paymentSendQueue()).to(stockPaymentExchange).with(routingKeySendToPayment);
     }
 }
