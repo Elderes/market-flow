@@ -1,7 +1,5 @@
 package com.accenture_project.order.dtos;
 
-import org.hibernate.validator.constraints.NotBlank;
-
-public record ProductDTO(@NotBlank String name,
+public record ProductDTO(String name,
                          Integer quantity){
 }

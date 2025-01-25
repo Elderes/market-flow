@@ -1,14 +1,14 @@
 package com.accenture_project.order.configs;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.*;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+@RequiredArgsConstructor
 @Configuration
 public class RabbitMQConfig {
 
@@ -33,16 +33,19 @@ public class RabbitMQConfig {
         return new Jackson2JsonMessageConverter();
     }
 
+    // Queue configuration for stock orders
     @Bean
     public Queue queueStockOrder() {
         return new Queue(queueStockOrder, true);
     }
 
+    // Queue configuration for payment orders
     @Bean
     public Queue queuePaymentOrder() {
         return new Queue(queuePaymentOrder, true);
     }
 
+    // Exchange configuration
     @Bean
     public FanoutExchange fanoutExchange() {
         return new FanoutExchange(exchangeFanout);
@@ -53,6 +56,7 @@ public class RabbitMQConfig {
         return new DirectExchange(exchangeDirect);
     }
 
+    // Bindings configurations
     @Bean
     public Binding bindingQueueStockOrderFanout(@Qualifier("queueStockOrder") Queue queue, FanoutExchange exchange) {
         return BindingBuilder.bind(queue).to(exchange);
