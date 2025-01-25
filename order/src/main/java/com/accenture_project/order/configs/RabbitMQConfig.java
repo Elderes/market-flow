@@ -32,12 +32,6 @@ public class RabbitMQConfig {
 
         return new Jackson2JsonMessageConverter();
     }
-    @Bean
-    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory, Jackson2JsonMessageConverter messageConverter) {
-        RabbitTemplate template = new RabbitTemplate(connectionFactory);
-        template.setMessageConverter(messageConverter);
-        return template;
-    }
 
     @Bean
     public Queue queueStockOrder() {

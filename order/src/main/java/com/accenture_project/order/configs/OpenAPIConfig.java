@@ -18,7 +18,7 @@ public class OpenAPIConfig {
 
         return new OpenAPI()
                 .info(new Info()
-                        .title("Comprador API")
+                        .title("Pedido API")
                         .version("1.0")
                         .description("")
                         .contact(contact));
