@@ -14,6 +14,9 @@ public class OpenAPIConfig {
                 .info(new Info()
                         .title("Pedido API")
                         .version("1.0")
-                        .description("API para gerenciamento de pedidos, integração com sistemas de pagamento e sistema de estoque, garantindo um fluxo automatizado para o processamento de pedidos."));
+                        .description("O Microserviço de Pedido é responsável por criar e gerenciar pedidos. " +
+                                "Este serviço envia os pedidos para filas que os microsserviços de estoque e pagamento consomem, utilizando a exchange do tipo fanout para garantir que as mensagens sejam transmitidas para ambos os serviços. " +
+                                "Além disso, ele possui um endpoint para processar o pagamento do pedido, enviando o código do pedido e o valor para o microsserviço de pagamento, utilizando a exchange do tipo direct para garantir uma comunicação direta. " +
+                                "O código ele recebe via email, caso o pedido seja confirmado."));
     }
 }
