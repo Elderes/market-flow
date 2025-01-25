@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import br.summer_academy.stock.dto.ProductRecordDTO;
 import br.summer_academy.stock.model.Product;
 import br.summer_academy.stock.repository.StockRepository;
 
+@Service
 public class StockService {
     @Autowired
     StockRepository repository;
