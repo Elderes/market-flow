@@ -8,10 +8,8 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     // Exchange Definitions
-    private static final String EXCHANGE_ORDER_BROADCAST = "exchange.order.broadcast";
-    private static final String EXCHANGE_STOCK_PAYMENT = "exchange.stock.payment";
-    private static final String EXCHANGE_PAYMENT_SEND = "exchange.payment.send";
-    private static final String EXCHANGE_SEND_CONFIRMATION = "exchange.send.confirmation";
+    private static final String EXCHANGE_DIRECT = "exchange.direct";
+    private static final String EXCHANGE_FANOUT = "exchange.fanout";
 
     // Queue Definitions
     private static final String QUEUE_STOCK_ORDER = "queue.stock.order";
@@ -22,7 +20,6 @@ public class RabbitMQConfig {
     private static final String QUEUE_PAYMENT_SEND = "queue.payment.send";
 
     // Routing Keys
-    private static final String ROUTING_KEY_ORDER_BROADCAST = "order.broadcast";
     private static final String ROUTING_KEY_STOCK_TO_PAYMENT = "stock.to.payment";
     private static final String ROUTING_KEY_PAYMENT_TO_ORDER = "payment.to.order";
     private static final String ROUTING_KEY_PAYMENT_TO_SEND = "payment.to.send";
@@ -30,23 +27,13 @@ public class RabbitMQConfig {
 
     // Define Exchanges
     @Bean
-    public FanoutExchange orderBroadcastExchange() {
-        return new FanoutExchange(EXCHANGE_ORDER_BROADCAST);
-    }
-
-    @Bean
     public DirectExchange stockPaymentExchange() {
-        return new DirectExchange(EXCHANGE_STOCK_PAYMENT);
+        return new DirectExchange(EXCHANGE_DIRECT);
     }
 
     @Bean
-    public DirectExchange paymentSendExchange() {
-        return new DirectExchange(EXCHANGE_PAYMENT_SEND);
-    }
-
-    @Bean
-    public DirectExchange sendConfirmationExchange() {
-        return new DirectExchange(EXCHANGE_SEND_CONFIRMATION);
+    public FanoutExchange orderBroadcastExchange() {
+        return new FanoutExchange(EXCHANGE_FANOUT);
     }
 
     // Define Queues
