@@ -12,6 +12,7 @@ public class OrderConsumer {
 
     private final SendService sendService;
 
+    // method that consumes messages from the queue, it saves the request and sends it to the email sending service
     @RabbitListener(queues = "${queue.send.payment}")
     public void consumerMessage(OrderModel order) {
         sendService.saveOrder(order);

@@ -27,19 +27,19 @@ public class RabbitMQConfig {
     @Value("${routing.key.payment.order}")
     private String routingKeyPaymentOrder;
 
+    // json to object converter configuration
     @Bean
     public Jackson2JsonMessageConverter messageConverter() {
-
         return new Jackson2JsonMessageConverter();
     }
 
-    // Queue configuration for stock orders
+    // Queue setup for stock and payment
     @Bean
     public Queue queueStockOrder() {
         return new Queue(queueStockOrder, true);
     }
 
-    // Queue configuration for payment orders
+    // Queue configuration for payment
     @Bean
     public Queue queuePaymentOrder() {
         return new Queue(queuePaymentOrder, true);

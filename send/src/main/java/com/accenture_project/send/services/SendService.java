@@ -1,5 +1,6 @@
 package com.accenture_project.send.services;
 
+import com.accenture_project.send.exceptions.EmailSendingException;
 import com.accenture_project.send.models.OrderModel;
 import com.accenture_project.send.models.ProductModel;
 import com.accenture_project.send.repositories.OrderRepository;
@@ -9,7 +10,6 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +27,7 @@ public class SendService {
     @Value("{$spring.mail.username}")
     private String emailFrom;
 
+    // method that processes data and saves it in mysql
     public void saveOrder(OrderModel order) {
         var address = addressService.verifyAddress(order.getClient().getAddress());
         var client = clientService.verifyClient(order.getClient());
@@ -51,7 +52,6 @@ public class SendService {
         return orderRepository.findAll();
     }
 
-    @Transactional
     public void sendEmail(OrderModel order) {
         try {
             var message = new SimpleMailMessage();
@@ -79,7 +79,7 @@ public class SendService {
             mailSender.send(message);
             System.out.println(order.getClient().getEmail());
         } catch (MailException e) {
-            System.out.println(e.getMessage());
+            throw new EmailSendingException("Error sending email to customer" + e.getMessage());
         }
     }
 }
