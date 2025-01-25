@@ -4,7 +4,12 @@ import com.accenture_project.send.models.OrderModel;
 import com.accenture_project.send.models.ProductModel;
 import com.accenture_project.send.repositories.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +22,10 @@ public class SendService {
     private final AddressService addressService;
     private final ClientService clientService;
     private final ProductService productService;
+    private final JavaMailSender mailSender;
+
+    @Value("{$spring.mail.username}")
+    private String emailFrom;
 
     public void saveOrder(OrderModel order) {
         var address = addressService.verifyAddress(order.getClient().getAddress());
@@ -42,7 +51,35 @@ public class SendService {
         return orderRepository.findAll();
     }
 
+    @Transactional
     public void sendEmail(OrderModel order) {
+        try {
+            var message = new SimpleMailMessage();
+            message.setTo(order.getClient().getEmail());
+            message.setFrom(emailFrom);
+            message.setSubject("Pedido concluído");
+            message.setText("Olá " + order.getClient().getName() + ",\n\n" +
+                    "Seu pedido está sendo enviado para o seguinte endereço:\n" +
+                    order.getClient().getAddress().getStreet() + ", " +
+                    order.getClient().getAddress().getNumber() + " - " +
+                    order.getClient().getAddress().getNeighborhood() + ", " +
+                    order.getClient().getAddress().getCity() + " - " +
+                    order.getClient().getAddress().getState() + "\n\n" +
+                    "Detalhes do pedido:\n");
 
+            for (ProductModel product : order.getProducts()) {
+                message.setText(message.getText() +
+                        "Produto: " + product.getName() + "\n" +
+                        "Quantidade: " + product.getQuantity() + "\n\n");
+            }
+
+            message.setText(message.getText() +
+                    "Obrigado por comprar conosco! Estamos preparando o envio.");
+
+            mailSender.send(message);
+            System.out.println(order.getClient().getEmail());
+        } catch (MailException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

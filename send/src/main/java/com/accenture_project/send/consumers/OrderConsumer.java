@@ -15,5 +15,6 @@ public class OrderConsumer {
     @RabbitListener(queues = "${queue.send.payment}")
     public void consumerMessage(OrderModel order) {
         sendService.saveOrder(order);
+        sendService.sendEmail(order);
     }
 }
