@@ -11,10 +11,6 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 @Configuration
 public class PagamentoAMPQConfig {
-//    @Bean
-//    public Queue criaFila(){
-//        return new Queue("pagamento.concluido", false);
-//    }
 
     @Bean
     public Jackson2JsonMessageConverter messageConverter1(){ //para converter para Json
@@ -28,13 +24,13 @@ public class PagamentoAMPQConfig {
         return rabbitTemplate;
     }
 
-    @Bean
-    public RabbitAdmin criaRabbitAdmin(ConnectionFactory conn){
-        return new RabbitAdmin(conn);
-    }
+//    @Bean
+//    public RabbitAdmin criaRabbitAdmin(ConnectionFactory conn){
+//        return new RabbitAdmin(conn);
+//    }
 
-    @Bean
-    public ApplicationListener<ApplicationReadyEvent> inicializaAdmin(RabbitAdmin rabbitAdmin){
-        return event -> rabbitAdmin.initialize();
-    }
+//    @Bean
+//    public ApplicationListener<ApplicationReadyEvent> inicializaAdmin(RabbitAdmin rabbitAdmin){
+//        return event -> rabbitAdmin.initialize();
+//    }
 }
