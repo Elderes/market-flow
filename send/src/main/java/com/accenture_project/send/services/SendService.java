@@ -1,59 +1,36 @@
 package com.accenture_project.send.services;
 
-import com.accenture_project.send.exceptions.EmailSendingException;
 import com.accenture_project.send.models.OrderModel;
 import com.accenture_project.send.models.ProductModel;
-import com.accenture_project.send.repositories.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+/**
+ * Service class responsible for sending emails related to order completion.
+ *
+ * - sendEmail: Sends an email to the customer with order details. Logs errors in case of failure.
+ */
 
 @RequiredArgsConstructor
 @Service
 public class SendService {
 
-    private final OrderRepository orderRepository;
-    private final AddressService addressService;
-    private final ClientService clientService;
-    private final ProductService productService;
+    private static final Logger logger = LoggerFactory.getLogger(SendService.class);
+
     private final JavaMailSender mailSender;
 
     @Value("{$spring.mail.username}")
     private String emailFrom;
-
-    // method that processes data and saves it in mysql
-    public void saveOrder(OrderModel order) {
-        var address = addressService.verifyAddress(order.getClient().getAddress());
-        var client = clientService.verifyClient(order.getClient());
-        client.setAddress(address);
-
-        order.setClient(client);
-
-        var products = new ArrayList<ProductModel>();
-
-        for (var product : order.getProducts()) {
-            var verifiedProduct = productService.verifyProduct(product);
-            verifiedProduct.setOrder(order);
-            products.add(verifiedProduct);
-        }
-
-        order.setProducts(products);
-
-        orderRepository.save(order);
-    }
-
-    public List<OrderModel> getOrders() {
-        return orderRepository.findAll();
-    }
-
     public void sendEmail(OrderModel order) {
         try {
+            logger.info("Sending email to {}", order.getClient().getEmail());
+
             var message = new SimpleMailMessage();
             message.setTo(order.getClient().getEmail());
             message.setFrom(emailFrom);
@@ -77,9 +54,8 @@ public class SendService {
                     "Obrigado por comprar conosco! Estamos preparando o envio.");
 
             mailSender.send(message);
-            System.out.println(order.getClient().getEmail());
         } catch (MailException e) {
-            throw new EmailSendingException("Error sending email to customer" + e.getMessage());
+            logger.error("Error sending email to customer: {}", e.getMessage());
         }
     }
 }

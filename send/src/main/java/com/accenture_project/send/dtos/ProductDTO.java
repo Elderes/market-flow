@@ -1,7 +1,11 @@
 package com.accenture_project.send.dtos;
 
-import org.hibernate.validator.constraints.NotBlank;
+/**
+ * Data Transfer Object (DTO) for representing a product.
+ * This class contains information about a product, including its name and quantity.
+ * It is used to transfer product data between layers or services in the application.
+ */
 
-public record ProductDTO(@NotBlank String name,
+public record ProductDTO(String name,
                          Integer quantity){
 }

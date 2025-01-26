@@ -3,12 +3,16 @@ package com.accenture_project.send.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.UUID;
 
-@Getter @Setter @ToString
+/**
+ * Entity class representing an address.
+ * It maps to the "tb_address" table in the database and stores the address details of a client.
+ */
+
+@Getter @Setter
 @Entity
 @Table(name = "tb_address")
 public class AddressModel implements Serializable {
