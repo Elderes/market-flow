@@ -8,6 +8,11 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.util.UUID;
 
+/**
+ * Entity class representing a product.
+ * It maps to the "tb_product" table in the database and stores product details.
+ */
+
 @Getter @Setter
 @Entity
 @Table(name = "tb_product")

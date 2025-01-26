@@ -1,12 +1,13 @@
 package com.accenture_project.send.dtos;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Pattern;
-import org.hibernate.validator.constraints.NotBlank;
+/**
+ * Data Transfer Object (DTO) for representing a client.
+ * This class contains the personal details of a client, including their address.
+ * It is used to transfer client data between layers or services in the application.
+ */
 
-public record ClientDTO(@NotBlank String name,
-                        @NotBlank @Pattern(regexp = "\\d{2}\\d{5}\\d{4}",
-                                message = "O número de celular deve estar no formato XXXXXXXXXXX") String cellphone,
-                        @NotBlank @Email String email,
+public record ClientDTO(String name,
+                        String cellphone,
+                        String email,
                         AddressDTO address) {
 }
