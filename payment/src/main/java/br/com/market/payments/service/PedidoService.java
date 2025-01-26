@@ -19,6 +19,7 @@ public class PedidoService {
     }
 
     public void validarCompra(PedidoDTO pedidoDTO, PagamentoDto pagamentoDto) {
+        System.out.println("Serviço rodando");
         // Calcular o valor total da compra
         BigDecimal totalCompra = BigDecimal.ZERO; // Inicialize corretamente o BigDecimal com ZERO
         for (PedidoDTO.ProductDTO product : pedidoDTO.getProducts()) {

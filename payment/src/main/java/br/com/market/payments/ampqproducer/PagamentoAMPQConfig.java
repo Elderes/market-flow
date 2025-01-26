@@ -11,10 +11,10 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 @Configuration
 public class PagamentoAMPQConfig {
-    @Bean
-    public Queue criaFila(){
-        return new Queue("pagamento.concluido", false);
-    }
+//    @Bean
+//    public Queue criaFila(){
+//        return new Queue("pagamento.concluido", false);
+//    }
 
     @Bean
     public RabbitAdmin criaRabbitAdmin(ConnectionFactory conn){

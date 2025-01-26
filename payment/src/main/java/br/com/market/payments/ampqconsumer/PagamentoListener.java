@@ -9,6 +9,7 @@ import br.com.market.payments.model.Pedido;
 import br.com.market.payments.repository.EstoqueRepository;
 import br.com.market.payments.repository.PagamentoRepository;
 import br.com.market.payments.repository.PedidoRepository;
+import br.com.market.payments.service.PedidoService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
@@ -19,11 +20,15 @@ public class PagamentoListener {
     private final EstoqueRepository estoqueRepository;
     private final PagamentoRepository pagamentoRepository;
 
+    private final PedidoService pedidoService;
+
     // Injeção dos repositórios via construtor
-    public PagamentoListener(PedidoRepository pedidoRepository, EstoqueRepository estoqueRepository, PagamentoRepository pagamentoRepository) {
+    public PagamentoListener(PedidoRepository pedidoRepository, EstoqueRepository estoqueRepository, PagamentoRepository pagamentoRepository,
+                             PedidoService pedidoService) {
         this.pedidoRepository = pedidoRepository;
         this.estoqueRepository = estoqueRepository;
         this.pagamentoRepository = pagamentoRepository;
+        this.pedidoService = pedidoService;
     }
 
     @RabbitListener(queues = "queue.payment.order")
@@ -48,6 +53,7 @@ public class PagamentoListener {
             System.out.println("  Bairro: " + address.getNeighborhood());
             System.out.println("  Cidade: " + address.getCity() + ", Estado: " + address.getState() + ", País: " + address.getCountry());
 
+
             // Processando os produtos
             System.out.println("Produtos:");
             for (PedidoDTO.ProductDTO product : pedidoDTO.getProducts()) {
@@ -65,21 +71,33 @@ public class PagamentoListener {
 
     @RabbitListener(queues = "queue.payment.stock")
     public void recebeEstoque(EstoqueDTO estoqueDTO) {
+        // Exibir no terminal os dados recebidos
+        System.out.println("Mensagem recebida na fila 'queue.payment.stock':");
+        System.out.println("EstoqueDTO recebido: " + estoqueDTO);
+
         // Converter DTO para Entidade
         Estoque estoque = new Estoque();
-        estoque.setProdutoId(estoqueDTO.getProdutoId());
-        estoque.setClienteID(estoqueDTO.getClienteID());
+        estoque.setProdutoId(estoqueDTO.getOrder_Id());
+        estoque.setClienteID(estoqueDTO.getClient_ID());
+        estoque.setProdutosDisponiveis(estoqueDTO.isApproval());
+        estoque.setValorTotal(estoqueDTO.getTotalValue());
 
-        estoque.setProdutosDisponiveis(estoqueDTO.isProdutosDisponiveis()); //retorna um boolean
-        estoque.setValorTotal(estoqueDTO.getValorTotal());
+        // Exibir no terminal os dados convertidos para entidade
+        System.out.println("Dados convertidos para entidade Estoque:");
+        System.out.println("Produto ID: " + estoque.getProdutoId());
+        System.out.println("Cliente ID: " + estoque.getClienteID());
+        System.out.println("Produtos Disponíveis: " + estoque.isProdutosDisponiveis());
+        System.out.println("Valor Total: " + estoque.getValorTotal());
 
         // Salvar no banco
-//        estoqueRepository.save(estoque);
-        System.out.println("Estoque salvo no banco e recebido de abraon: " + estoque);
+        // estoqueRepository.save(estoque);
+
+        System.out.println("Estoque salvo no banco e recebido: " + estoque);
     }
 
+
     @RabbitListener(queues = "queue.payment.order.pay")
-    public void recebePagamento(PagamentoDto pagamentoDTO) {
+    public void recebePagamento(PagamentoDto pagamentoDTO, PedidoDTO pedidoDTO) {
         // Converter DTO para Entidade
         Pagamento pagamento = new Pagamento();
         pagamento.setId(pagamentoDTO.getId());
@@ -90,9 +108,13 @@ public class PagamentoListener {
         System.out.println(" ");
         System.out.println("Testando valor do pagamento: " + pagamento.getValue());
 
+        pedidoService.validarCompra(pedidoDTO,pagamentoDTO);
+
         // Salvar no banco
         pagamentoRepository.save(pagamento);
         System.out.println("Pagamento salvo no banco e recebido de lucas: " + pagamento);
+
+
 
     }
 }
