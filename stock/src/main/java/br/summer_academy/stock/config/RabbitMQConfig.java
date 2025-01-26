@@ -14,9 +14,6 @@ public class RabbitMQConfig {
     @Value("${rabbitmq.exchange.direct}")
     private String directExchange;
 
-    @Value("${rabbitmq.exchange.fanout}")
-    private String fanoutExchange;
-
     @Value("${rabbitmq.queue.stock.order}")
     private String stockOrderQueue;
 
@@ -44,11 +41,6 @@ public class RabbitMQConfig {
         return new DirectExchange(directExchange);
     }
 
-    @Bean
-    public FanoutExchange orderBroadcastExchange() {
-        return new FanoutExchange(fanoutExchange);
-    }
-
     // Define Queues
     @Bean
     public Queue stockOrderQueue() {
@@ -61,11 +53,6 @@ public class RabbitMQConfig {
     }
 
     // Bindings (link queues to exchanges with routing keys)
-    @Bean
-    public Binding bindStockOrderQueue(FanoutExchange orderBroadcastExchange) {
-        return BindingBuilder.bind(stockOrderQueue()).to(orderBroadcastExchange);
-    }
-
     @Bean
     public Binding bindPaymentStockQueue(DirectExchange stockPaymentExchange) {
         return BindingBuilder.bind(paymentStockQueue()).to(stockPaymentExchange).with(routingKeyStockToPayment);
