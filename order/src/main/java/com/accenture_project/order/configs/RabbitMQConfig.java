@@ -1,14 +1,11 @@
 package com.accenture_project.order.configs;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@RequiredArgsConstructor
 @Configuration
 public class RabbitMQConfig {
 
@@ -18,6 +15,9 @@ public class RabbitMQConfig {
     @Value("${queue.payment.order}")
     private String queuePaymentOrder;
 
+    @Value("${queue.payment.order.pay}")
+    private String queuePaymentOrderPay;
+
     @Value("${exchange.fanout}")
     private String exchangeFanout;
 
@@ -25,7 +25,7 @@ public class RabbitMQConfig {
     private String exchangeDirect;
 
     @Value("${routing.key.payment.order}")
-    private String routingKeyPaymentOrder;
+    private String routingKeyPaymentOrderPay;
 
     // json to object converter configuration
     @Bean
@@ -45,6 +45,12 @@ public class RabbitMQConfig {
         return new Queue(queuePaymentOrder, true);
     }
 
+    // Queue configuration for payment
+    @Bean
+    public Queue queuePaymentOrderPay() {
+        return new Queue(queuePaymentOrderPay, true);
+    }
+
     // Exchange configuration
     @Bean
     public FanoutExchange fanoutExchange() {
@@ -58,17 +64,17 @@ public class RabbitMQConfig {
 
     // Bindings configurations
     @Bean
-    public Binding bindingQueueStockOrderFanout(@Qualifier("queueStockOrder") Queue queue, FanoutExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange);
+    public Binding bindingQueueStockOrderFanout(FanoutExchange exchange) {
+        return BindingBuilder.bind(queueStockOrder()).to(exchange);
     }
 
     @Bean
-    public Binding bindingQueuePaymentOrderFanout(@Qualifier("queuePaymentOrder") Queue queue, FanoutExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange);
+    public Binding bindingQueuePaymentOrderFanout(FanoutExchange exchange) {
+        return BindingBuilder.bind(queuePaymentOrder()).to(exchange);
     }
 
     @Bean
-    public Binding bindingQueuePaymentDirect(@Qualifier("queuePaymentOrder") Queue queue, DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(routingKeyPaymentOrder);
+    public Binding bindingQueuePaymentDirect(DirectExchange exchange) {
+        return BindingBuilder.bind(queuePaymentOrderPay()).to(exchange).with(routingKeyPaymentOrderPay);
     }
 }
