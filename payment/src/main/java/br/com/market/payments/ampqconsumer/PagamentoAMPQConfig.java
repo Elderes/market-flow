@@ -1,4 +1,4 @@
-package br.com.market.payments.ampqproducer;
+package br.com.market.payments.ampqconsumer;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -17,17 +17,7 @@ public class PagamentoAMPQConfig {
 //    }
 
     @Bean
-    public RabbitAdmin criaRabbitAdmin(ConnectionFactory conn){
-        return new RabbitAdmin(conn);
-    }
-
-    @Bean
-    public ApplicationListener<ApplicationReadyEvent> inicializaAdmin(RabbitAdmin rabbitAdmin){
-        return event -> rabbitAdmin.initialize();
-    }
-
-    @Bean
-    public Jackson2JsonMessageConverter messageConverter(){ //para converter para Json
+    public Jackson2JsonMessageConverter messageConverter1(){ //para converter para Json
         return new Jackson2JsonMessageConverter();
     }
 
@@ -35,6 +25,16 @@ public class PagamentoAMPQConfig {
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory, Jackson2JsonMessageConverter messageConverter){
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(messageConverter);
-        return  rabbitTemplate;
+        return rabbitTemplate;
+    }
+
+    @Bean
+    public RabbitAdmin criaRabbitAdmin(ConnectionFactory conn){
+        return new RabbitAdmin(conn);
+    }
+
+    @Bean
+    public ApplicationListener<ApplicationReadyEvent> inicializaAdmin(RabbitAdmin rabbitAdmin){
+        return event -> rabbitAdmin.initialize();
     }
 }

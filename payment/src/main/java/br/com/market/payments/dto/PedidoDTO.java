@@ -7,7 +7,6 @@ import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -15,7 +14,7 @@ import java.util.UUID;
 public class PedidoDTO {
 
     @JsonProperty("id")  // Mapeia o campo "id" do JSON para "pedidoId"
-    private UUID pedidoId;
+    private String pedidoId;
 
     private List<ProductDTO> products;  // Não tem nome e quantidade no pedido, mas nos produtos
 

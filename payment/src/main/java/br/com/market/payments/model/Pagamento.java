@@ -12,6 +12,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "pagamentos")
@@ -22,11 +23,9 @@ import java.time.LocalDateTime;
 public class Pagamento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
 
     @NotNull
-//    @Positive
     private BigDecimal value;
 
     @Column(name = "datetime", nullable = false)
@@ -34,5 +33,4 @@ public class Pagamento {
 
     @Column(name = "code", nullable = false)
     private String code;
-
 }
