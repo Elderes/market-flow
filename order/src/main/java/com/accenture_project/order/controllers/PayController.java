@@ -26,7 +26,7 @@ public class PayController {
             payService.validatePayment(payModel);
             payService.payOrder(payModel);
 
-            return ResponseEntity.status(HttpStatus.OK).body("Pagamento realizado com sucesso!");
+            return ResponseEntity.status(HttpStatus.OK).body("Pagamento enviado com sucesso!");
         } catch (InvalidPayException | NegativeArraySizeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
