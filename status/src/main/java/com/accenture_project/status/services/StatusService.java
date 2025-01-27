@@ -1,5 +1,6 @@
 package com.accenture_project.status.services;
 
+import com.accenture_project.status.exceptions.NoStatusException;
 import com.accenture_project.status.models.OrderModel;
 import com.accenture_project.status.models.PaymentModel;
 import com.accenture_project.status.models.StatusModel;
@@ -10,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -46,5 +49,27 @@ public class StatusService {
         statusRepository.save(status);
 
         statusProducer.publishOrder(order);
+    }
+
+    public List<StatusModel> getAllStatus() {
+        var status = statusRepository.findAll();
+
+        if (status.isEmpty()) {
+            throw new NoStatusException("There are no status");
+        }
+
+        return status;
+    }
+
+    public StatusModel getStatus(UUID id) {
+        return statusRepository.findById(id)
+                .orElseThrow(() -> new NoStatusException("Status not found with id:" + id));
+    }
+
+    public void deleteById(UUID id) {
+        if (getStatus(id) == null) {
+            throw new NoStatusException("Status not found with id:" + id);
+        }
+        statusRepository.deleteById(id);
     }
 }

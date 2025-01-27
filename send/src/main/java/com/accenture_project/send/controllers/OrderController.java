@@ -51,8 +51,8 @@ public class OrderController {
         }
     }
 
-    @GetMapping("/order/{id}")
-    public ResponseEntity<OrderModel> getOrderById(@PathVariable("id") UUID id) {
+    @GetMapping("/order")
+    public ResponseEntity<OrderModel> getOrderById(@RequestBody UUID id) {
         try {
             var order = orderService.getOrder(id);
 

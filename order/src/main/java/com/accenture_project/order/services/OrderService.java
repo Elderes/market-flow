@@ -1,5 +1,9 @@
 package com.accenture_project.order.services;
 
+import com.accenture_project.order.dtos.OrderDTO;
+import com.accenture_project.order.exceptions.NoOrderException;
+import com.accenture_project.order.mappers.ClientUpdateMapper;
+import com.accenture_project.order.mappers.OrderUpdateMapper;
 import com.accenture_project.order.models.OrderModel;
 import com.accenture_project.order.models.ProductModel;
 import com.accenture_project.order.producers.OrderProducer;
@@ -14,6 +18,9 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.UUID;
+
 @RequiredArgsConstructor
 @Service
 public class OrderService {
@@ -21,10 +28,16 @@ public class OrderService {
     private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
 
     private final OrderRepository orderRepository;
+
     private final OrderProducer orderProducer;
+
     private final ClientService clientService;
     private final ProductService productService;
+
+    private final OrderUpdateMapper orderUpdateMapper;
+
     private final JavaMailSender mailSender;
+    private final ClientUpdateMapper clientUpdateMapper;
 
     @Value("{$spring.mail.username}")
     private String emailFrom;
@@ -67,5 +80,36 @@ public class OrderService {
         } catch (MailException e) {
             logger.error("Error sending email to customer: {}", e.getMessage());
         }
+    }
+
+    public List<OrderModel> getOrders() {
+        var orders = orderRepository.findAll();
+
+        if (orders.isEmpty()) {
+            throw new NoOrderException("There are no orders");
+        }
+
+        return orders;
+    }
+
+    public OrderModel getOrder(UUID id) {
+        return orderRepository.findById(id)
+                .orElseThrow(() -> new NoOrderException("Order not found with id:" + id));
+    }
+
+    public void deleteById(UUID id) {
+        if (getOrder(id) == null) {
+            throw new NoOrderException("Order not found with id:" + id);
+        }
+        orderRepository.deleteById(id);
+    }
+
+    public void updateOrder(UUID id, OrderDTO orderDTO) {
+        var order = orderRepository.findById(id)
+                .orElseThrow(() -> new NoOrderException("Order not found"));
+
+        order = orderUpdateMapper.toOrderModel(order, orderDTO);
+
+        orderRepository.save(order);
     }
 }
