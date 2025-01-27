@@ -1,6 +1,6 @@
 package br.com.market.payments.producer;
 
-import br.com.market.payments.model.OrderModel;
+import br.com.market.payments.model.Pagamento;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +17,8 @@ public class PaymentProducer {
     @Value("${queue.send.payment}")
     private String routingKey;
 
-    public void publishSend(OrderModel order) {
-        rabbitTemplate.convertAndSend(exchange, routingKey, order);
+    public void publishSend(Pagamento payment) {
+        rabbitTemplate.convertAndSend(exchange, routingKey, payment);
     }
 }
+    

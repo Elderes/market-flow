@@ -32,7 +32,4 @@ public class StockConsumer {
         }
     }
 
-    public void confirmSend() {
-        
-    }
 }

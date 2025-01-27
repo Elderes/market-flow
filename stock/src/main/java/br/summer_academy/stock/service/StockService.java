@@ -1,6 +1,5 @@
 package br.summer_academy.stock.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,10 +22,13 @@ public class StockService {
     private final RabbitTemplate rabbitTemplate;
 
     @Value("${rabbitmq.exchange.direct}")
-    private String directExchange;
+    private String exchange_direct;
 
     @Value("${rabbitmq.routing.stock.to.payment}")
-    private String paymentStockRoutingKey;
+    private String key_stock_to_payment;
+
+    @Value("${rabbitmq.routing.stock.to.status}")
+    private String key_stock_to_status;
 
     public StockService(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
@@ -60,30 +62,23 @@ public class StockService {
         }).collect(Collectors.toList());
     }
 
+    // Approve and send to Payment
     public void approveOrderAndValue(OrderRecordDTO order) {
-        BigDecimal totalValue = new BigDecimal(0);
-        for (Product p : mapProducts(order.products())) {
-            Product stockProduct = repository.findByName(p.getName()); // Search by name
-            BigDecimal quantity = BigDecimal.valueOf(p.getQuantity());
-            totalValue = totalValue.add(stockProduct.getPrice().multiply(quantity));
-        }
         StockOrderDTO dto = new StockOrderDTO();
         dto.setOrder_id(order.id());
         dto.setClient_id(order.client().id());
         dto.setApproval(true);
-        dto.setTotalValue(totalValue);
-        System.out.println("Total value: " + totalValue);
-        rabbitTemplate.convertAndSend(directExchange, paymentStockRoutingKey, dto);
+        rabbitTemplate.convertAndSend(exchange_direct, key_stock_to_payment, dto);
         System.out.println("Status: Approved");
     }
     
+    // Disapprove and send to Payment
     public void disapproveOrderAndValue(OrderRecordDTO order) {
         StockOrderDTO dto = new StockOrderDTO();
         dto.setOrder_id(order.id());
         dto.setClient_id(order.client().id());
         dto.setApproval(false);
-        dto.setTotalValue(null);
-        rabbitTemplate.convertAndSend(directExchange, paymentStockRoutingKey, dto);
+        rabbitTemplate.convertAndSend(exchange_direct, key_stock_to_payment, dto);
         System.out.println("Status: Not approved");
     }
 
