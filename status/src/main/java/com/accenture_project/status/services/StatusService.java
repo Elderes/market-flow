@@ -1,6 +1,8 @@
 package com.accenture_project.status.services;
 
+import com.accenture_project.status.dtos.StatusDTO;
 import com.accenture_project.status.exceptions.NoStatusException;
+import com.accenture_project.status.mappers.StatusMapper;
 import com.accenture_project.status.models.OrderModel;
 import com.accenture_project.status.models.PaymentModel;
 import com.accenture_project.status.models.StatusModel;
@@ -20,7 +22,10 @@ public class StatusService {
 
     private final OrderRepository orderRepository;
     private final StatusRepository statusRepository;
+
     private final StatusProducer statusProducer;
+
+    private final StatusMapper statusMapper;
 
     public void saveOrder(OrderModel order) {
         if (order.getProducts() != null) {
@@ -71,5 +76,13 @@ public class StatusService {
             throw new NoStatusException("Status not found with id:" + id);
         }
         statusRepository.deleteById(id);
+    }
+
+    public void updateStatus(UUID id, StatusDTO statusDTO) {
+        var status = getStatus(id);
+
+        status = statusMapper.toStatusModel(status, statusDTO);
+
+        statusRepository.save(status);
     }
 }

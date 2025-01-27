@@ -1,5 +1,6 @@
 package com.accenture_project.status.controllers;
 
+import com.accenture_project.status.dtos.StatusDTO;
 import com.accenture_project.status.exceptions.NoStatusException;
 import com.accenture_project.status.models.StatusModel;
 import com.accenture_project.status.services.StatusService;
@@ -21,7 +22,7 @@ public class StatusController {
 
     private final StatusService statusService;
 
-    @GetMapping("/status")
+    @GetMapping("/all_status")
     public ResponseEntity<List<StatusModel>> getAllStatus() {
         try {
             var status = statusService.getAllStatus();
@@ -72,25 +73,22 @@ public class StatusController {
         }
     }
 
-//    @PutMapping("/status/{id}")
-//    public ResponseEntity<String> updateStatus(@PathVariable("id") UUID id, @RequestBody statusDTO orderDTO) {
-//        try {
-//            var order = orderMapper.toOrderModel(orderDTO);
-//
-//            orderService.validateOrder(order);
-//            orderService.updateOrder(id, orderDTO);
-//
-//            logger.info("Order successfully updated");
-//
-//            return ResponseEntity.status(HttpStatus.OK).body("Order updated successfully!");
-//        } catch (InvalidClientException | InvalidAddressException | InvalidProductException e) {
-//            logger.error("Error updating order", e);
-//
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-//        } catch (Exception e) {
-//            logger.error("Error updating order ", e);
-//
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Unexpected error: " + e.getMessage());
-//        }
-//    }
+    @PutMapping("/status/{id}")
+    public ResponseEntity<String> updateStatus(@PathVariable("id") UUID id, @RequestBody StatusDTO statusDTO) {
+        try {
+            statusService.updateStatus(id, statusDTO);
+
+            logger.info("Status successfully updated");
+
+            return ResponseEntity.status(HttpStatus.OK).body("Status updated successfully!");
+        } catch (NoStatusException e) {
+            logger.error("Error updating status", e);
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            logger.error("Error updating status ", e);
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Unexpected error: " + e.getMessage());
+        }
+    }
 }
