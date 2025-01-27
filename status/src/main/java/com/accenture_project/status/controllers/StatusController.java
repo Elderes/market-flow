@@ -71,4 +71,26 @@ public class StatusController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting order");
         }
     }
+
+//    @PutMapping("/status/{id}")
+//    public ResponseEntity<String> updateStatus(@PathVariable("id") UUID id, @RequestBody statusDTO orderDTO) {
+//        try {
+//            var order = orderMapper.toOrderModel(orderDTO);
+//
+//            orderService.validateOrder(order);
+//            orderService.updateOrder(id, orderDTO);
+//
+//            logger.info("Order successfully updated");
+//
+//            return ResponseEntity.status(HttpStatus.OK).body("Order updated successfully!");
+//        } catch (InvalidClientException | InvalidAddressException | InvalidProductException e) {
+//            logger.error("Error updating order", e);
+//
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+//        } catch (Exception e) {
+//            logger.error("Error updating order ", e);
+//
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Unexpected error: " + e.getMessage());
+//        }
+//    }
 }
