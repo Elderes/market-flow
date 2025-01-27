@@ -32,13 +32,4 @@ public class OrderModel implements Serializable {
     private LocalDateTime orderDateTime;
 
     private BigDecimal totalPrice;
-
-    public void setTotalPrice() {
-        if (!products.isEmpty()) {
-            totalPrice = BigDecimal.ZERO;
-            for (ProductModel product : products) {
-                totalPrice = totalPrice.add(product.getUnitPrice().multiply(BigDecimal.valueOf(product.getQuantity())));
-            }
-        }
-    }
 }

@@ -12,7 +12,7 @@ public class OrderProducer {
     private final RabbitTemplate rabbitTemplate;
     private final FanoutExchange fanoutExchange;
 
-    public void publishOrder(OrderModel message) {
-        rabbitTemplate.convertAndSend(fanoutExchange.getName(),"", message);
+    public void publishOrder(OrderModel order) { 
+        rabbitTemplate.convertAndSend(fanoutExchange.getName(),"", order);
     }
 }
