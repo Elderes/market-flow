@@ -28,6 +28,7 @@ public class OrderController {
             orderService.validateOrder(order);
             orderService.saveOrder(order);
             orderService.publishOrder(order);
+            orderService.sendEmail(order);
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Pedido criado com sucesso!");
         } catch (InvalidClientException | InvalidAddressException | InvalidProductException e) {

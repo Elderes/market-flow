@@ -27,6 +27,7 @@ public class SendService {
 
     @Value("{$spring.mail.username}")
     private String emailFrom;
+
     public void sendEmail(OrderModel order) {
         try {
             logger.info("Sending email to {}", order.getClient().getEmail());

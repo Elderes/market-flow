@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +20,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "tb_order")
 public class OrderModel implements Serializable {
-    private static final long serialVersionUID = 1L;
-
     @Id
     private UUID id;
 
@@ -33,4 +32,6 @@ public class OrderModel implements Serializable {
 
     @Column(nullable = false)
     private LocalDateTime orderDateTime;
+
+    private BigDecimal totalPrice;
 }

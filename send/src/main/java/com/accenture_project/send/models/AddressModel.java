@@ -16,8 +16,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "tb_address")
 public class AddressModel implements Serializable {
-    private static final long serialVersionUID = 1L;
-
     @Id
     private UUID id;
 

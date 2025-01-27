@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 /**
@@ -17,8 +18,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "tb_product")
 public class ProductModel implements Serializable {
-    private static final long serialVersionUID = 1L;
-
     @Id
     private UUID id;
 
@@ -27,6 +26,8 @@ public class ProductModel implements Serializable {
 
     @Column(nullable = false)
     private Integer quantity;
+
+    private BigDecimal unitPrice;
 
     @JsonIgnore
     @ManyToOne

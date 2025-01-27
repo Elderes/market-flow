@@ -25,7 +25,7 @@ public class OrderConsumer {
     private final OrderService orderService;
     private final SendService sendService;
 
-    @RabbitListener(queues = "${queue.send.payment}")
+    @RabbitListener(queues = "${queue.send.status}")
     public void consumerMessage(OrderModel order) {
         try {
             orderService.saveOrder(order);

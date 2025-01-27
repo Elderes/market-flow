@@ -8,50 +8,37 @@ import com.accenture_project.order.models.AddressModel;
 import com.accenture_project.order.models.ClientModel;
 import com.accenture_project.order.models.OrderModel;
 import com.accenture_project.order.models.ProductModel;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Component
 public class OrderMapper {
 
+    private final ClientMapper clientMapper;
+    private final ProductsMapper productsMapper;
+
     public OrderModel toOrderModel(OrderDTO orderDTO) {
         var order = new OrderModel();
-        order.setClient(toClientModel(orderDTO.client()));
-        var products = toProductModels(orderDTO.products());
+
+        order.setClient(clientMapper.toClientModel(orderDTO.client()));
+
+        var products = productsMapper.toProductModels(orderDTO.products());
+
         products.forEach(product -> product.setOrder(order));
         order.setProducts(products);
         order.setOrderDateTime(LocalDateTime.now());
+        order.setTotalPrice();
+
         return order;
     }
 
-    public ClientModel toClientModel(ClientDTO clientDTO) {
-        var client = new ClientModel();
-        client.setName(clientDTO.name());
-        client.setCellphone(clientDTO.cellphone());
-        client.setEmail(clientDTO.email());
-        client.setAddress(toAddressModel(clientDTO.address()));
-        return client;
-    }
 
-    public AddressModel toAddressModel(AddressDTO addressDTO) {
-        var address = new AddressModel();
-        address.setCountry(addressDTO.country());
-        address.setState(addressDTO.state());
-        address.setCity(addressDTO.city());
-        address.setNeighborhood(addressDTO.neighborhood());
-        address.setStreet(addressDTO.street());
-        address.setNumber(addressDTO.number());
-        return address;
-    }
 
-    public List<ProductModel> toProductModels(List<ProductDTO> productsDTO) {
-        return productsDTO.stream().map(productDTO -> {
-            var product = new ProductModel();
-            product.setName(productDTO.name());
-            product.setQuantity(productDTO.quantity());
-            return product;
-        }).toList();
-    }
+
+
+
 }

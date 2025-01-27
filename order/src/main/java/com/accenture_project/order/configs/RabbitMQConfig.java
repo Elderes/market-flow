@@ -15,25 +15,14 @@ public class RabbitMQConfig {
     @Value("${queue.payment.order}")
     private String queuePaymentOrder;
 
-    @Value("${queue.payment.order.pay}")
-    private String queuePaymentOrderPay;
-
     @Value("${exchange.fanout}")
     private String exchangeFanout;
 
-    @Value("${exchange.direct}")
-    private String exchangeDirect;
-
-    @Value("${routing.key.payment.order}")
-    private String routingKeyPaymentOrderPay;
-
-    // json to object converter configuration
     @Bean
     public Jackson2JsonMessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
     }
 
-    // Queue setup for stock and payment
     @Bean
     public Queue queueStockOrder() {
         return new Queue(queueStockOrder, true);
@@ -45,21 +34,9 @@ public class RabbitMQConfig {
         return new Queue(queuePaymentOrder, true);
     }
 
-    // Queue configuration for payment
-    @Bean
-    public Queue queuePaymentOrderPay() {
-        return new Queue(queuePaymentOrderPay, true);
-    }
-
-    // Exchange configuration
     @Bean
     public FanoutExchange fanoutExchange() {
         return new FanoutExchange(exchangeFanout);
-    }
-
-    @Bean
-    public DirectExchange directExchange() {
-        return new DirectExchange(exchangeDirect);
     }
 
     // Bindings configurations
@@ -71,10 +48,5 @@ public class RabbitMQConfig {
     @Bean
     public Binding bindingQueuePaymentOrderFanout(FanoutExchange exchange) {
         return BindingBuilder.bind(queuePaymentOrder()).to(exchange);
-    }
-
-    @Bean
-    public Binding bindingQueuePaymentDirect(DirectExchange exchange) {
-        return BindingBuilder.bind(queuePaymentOrderPay()).to(exchange).with(routingKeyPaymentOrderPay);
     }
 }
