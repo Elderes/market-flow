@@ -20,6 +20,8 @@ public class StockService {
     @Autowired
     StockRepository repository;
 
+    private List<Product> listOfProducts = new ArrayList<>();
+
     private final RabbitTemplate rabbitTemplate;
 
     @Value("${rabbitmq.exchange.direct}")
@@ -48,15 +50,13 @@ public class StockService {
 
     // Mapping DTO to Entity
     public List<Product> mapProducts(List<ProductRecordDTO> productDTOs) {
-        List<Product> products = new ArrayList<>();
-    
-        System.out.println("\n");
+        System.out.println("");
         for (ProductRecordDTO dto : productDTOs) {
             Product stockProduct = repository.findByName(dto.name());
     
             if (stockProduct == null) {
                 System.out.print("Product with name '" + dto.name() + "' not found.");
-                products.add(null); // Insert null for missing product
+                listOfProducts.add(null); // Insert null for missing product
                 continue; // Skip this product instead of returning null
             }
     
@@ -65,26 +65,28 @@ public class StockService {
             product.setName(dto.name());
             product.setQuantity(dto.quantity());
             product.setPrice(stockProduct.getPrice());
-            products.add(product);
+            listOfProducts.add(product);
         }
-        return products;
+        return listOfProducts;
     }    
 
     // Approve and send to Payment
     public void approveOrderAndValue(OrderRecordDTO order) {
         StockOrderDTO dto = new StockOrderDTO();
-        dto.setOrder_id(order.id());
-        dto.setClient_id(order.client().id());
+        dto.setOrderId(order.id());
+        dto.setProducts(listOfProducts);
         dto.setApproval(true);
+        dto.setOrderDateTime(order.orderDateTime());
         rabbitTemplate.convertAndSend(exchange_direct, key_stock_to_payment, dto);
+        listOfProducts.clear();
         System.out.println("Status: Approved");
     }
     
     // Disapprove and send to Payment
     public void disapproveOrderAndValue(OrderRecordDTO order) {
         StockOrderDTO dto = new StockOrderDTO();
-        dto.setOrder_id(order.id());
-        dto.setClient_id(order.client().id());
+        dto.setOrderId(order.id());
+        dto.setOrderDateTime(order.orderDateTime());
         dto.setApproval(false);
         rabbitTemplate.convertAndSend(exchange_direct, key_stock_to_payment, dto);
         System.out.println("Status: Not approved");
