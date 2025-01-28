@@ -18,7 +18,6 @@ public class OrderUpdateMapper {
 
         orderModel.setClient(clientUpdateMapper.toClientModel(orderModel.getClient(), orderDTO));
         orderModel.setProducts(productsUpdateMapper.toProductsModel(orderModel.getProducts(), orderDTO));
-        orderModel.setTotalPrice();
 
         return orderModel;
     }

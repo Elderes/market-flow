@@ -14,6 +14,7 @@ public class AddressMapper {
 
         var address = new AddressModel();
 
+        address.setId(addressDTO.id());
         address.setCountry(addressDTO.country());
         address.setState(addressDTO.state());
         address.setCity(addressDTO.city());

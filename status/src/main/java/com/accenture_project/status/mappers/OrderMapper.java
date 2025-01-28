@@ -24,7 +24,6 @@ public class OrderMapper {
         order.setClient(clientMapper.toClientModel(orderDTO.client()));
         order.setProducts(productsMapper.toProductsModel(orderDTO.products()));
         order.setOrderDateTime(orderDTO.orderDateTime());
-        order.setTotalPrice(orderDTO.totalPrice());
 
         return order;
     }

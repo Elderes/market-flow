@@ -12,7 +12,7 @@ public class PaymentMapper {
         payment.setId(paymentDTO.id());
         payment.setOrderId(paymentDTO.orderId());
         payment.setDatetime(paymentDTO.dateTime());
-        payment.setValue(paymentDTO.value());
+        payment.setTotalValue(paymentDTO.totalValue());
 
         return payment;
     }

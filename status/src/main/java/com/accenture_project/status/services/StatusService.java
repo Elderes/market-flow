@@ -28,10 +28,6 @@ public class StatusService {
     private final StatusMapper statusMapper;
 
     public void saveOrder(OrderModel order) {
-        if (order.getProducts() != null) {
-            order.getProducts().forEach(product -> product.setOrder(order));
-        }
-
         orderRepository.save(order);
 
         var status = new StatusModel();
@@ -43,10 +39,16 @@ public class StatusService {
         statusRepository.save(status);
     }
 
+    public void updateOrder(OrderModel order) {
+        orderRepository.save(order);
+    }
+
     public void paymentOrder(PaymentModel payment) {
         var order = orderRepository.findById(payment.getOrderId()).orElseThrow(() -> new RuntimeException("Order not found"));
+        order.setTotalPrice(payment.getTotalValue());
 
         var status = statusRepository.findByOrderId(payment.getOrderId());
+        updateOrder(order);
 
         status.setWasPaid(true);
         status.setLastUpdate(LocalDateTime.now());

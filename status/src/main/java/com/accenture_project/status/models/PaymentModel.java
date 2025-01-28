@@ -10,7 +10,7 @@ import java.util.UUID;
 @Getter @Setter
 public class PaymentModel {
     private UUID id;
-    private BigDecimal value;
+    private BigDecimal totalValue;
     private LocalDateTime datetime;
     private UUID orderId;
 }
