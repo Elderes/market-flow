@@ -39,8 +39,8 @@ public class StatusController {
         }
     }
 
-    @GetMapping("/status")
-    public ResponseEntity<StatusModel> getAllStatus(@RequestBody UUID id) {
+    @GetMapping("/status/{id}")
+    public ResponseEntity<StatusModel> getAllStatus(@PathVariable("id") UUID id) {
         try {
             var status = statusService.getStatus(id);
 
@@ -56,8 +56,8 @@ public class StatusController {
         }
     }
 
-    @DeleteMapping("/status")
-    public ResponseEntity<String> getStatus(@RequestBody UUID id) {
+    @DeleteMapping("/status/{id}")
+    public ResponseEntity<String> getStatus(@PathVariable("id") UUID id) {
         try {
             statusService.deleteById(id);
 
