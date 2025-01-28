@@ -2,13 +2,11 @@ package com.accenture_project.order.mappers;
 
 import com.accenture_project.order.dtos.OrderDTO;
 import com.accenture_project.order.dtos.ProductDTO;
-import com.accenture_project.order.models.OrderModel;
 import com.accenture_project.order.models.ProductModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Component

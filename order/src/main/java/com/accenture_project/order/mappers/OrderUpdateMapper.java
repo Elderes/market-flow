@@ -5,8 +5,6 @@ import com.accenture_project.order.models.OrderModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
 @RequiredArgsConstructor
 @Component
 public class OrderUpdateMapper {
@@ -18,7 +16,6 @@ public class OrderUpdateMapper {
 
         orderModel.setClient(clientUpdateMapper.toClientModel(orderModel.getClient(), orderDTO));
         orderModel.setProducts(productsUpdateMapper.toProductsModel(orderModel.getProducts(), orderDTO));
-        orderModel.setTotalPrice();
 
         return orderModel;
     }

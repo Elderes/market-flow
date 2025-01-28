@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record PaymentDTO(UUID id,
-                         BigDecimal value,
+                         BigDecimal totalValue,
                          LocalDateTime dateTime,
                          UUID orderId) {
 

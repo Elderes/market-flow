@@ -1,18 +1,11 @@
 package com.accenture_project.order.mappers;
 
-import com.accenture_project.order.dtos.AddressDTO;
-import com.accenture_project.order.dtos.ClientDTO;
 import com.accenture_project.order.dtos.OrderDTO;
-import com.accenture_project.order.dtos.ProductDTO;
-import com.accenture_project.order.models.AddressModel;
-import com.accenture_project.order.models.ClientModel;
 import com.accenture_project.order.models.OrderModel;
-import com.accenture_project.order.models.ProductModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Component

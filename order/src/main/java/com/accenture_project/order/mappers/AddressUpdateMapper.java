@@ -4,12 +4,8 @@ import com.accenture_project.order.dtos.AddressDTO;
 import com.accenture_project.order.dtos.ClientDTO;
 import com.accenture_project.order.dtos.OrderDTO;
 import com.accenture_project.order.models.AddressModel;
-import com.accenture_project.order.models.ClientModel;
-import com.accenture_project.order.models.OrderModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Component

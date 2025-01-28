@@ -32,8 +32,6 @@ public class StatusConsumer {
 
     @RabbitListener(queues = "${queue.status.stock}")
     public void consumerStockMessage(OrderDTO orderDto) {
-
-        // Map ClientRecordDTO to ClientModel
         var order = orderMapper.toOrderModel(orderDto);
         
         try {
