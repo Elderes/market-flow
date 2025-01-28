@@ -1,23 +1,22 @@
-package com.accenture_project.status.mappers;
+package br.com.market.payments.mapper;
 
-import com.accenture_project.status.dtos.ProductDTO;
-import com.accenture_project.status.exceptions.NoProductException;
-import com.accenture_project.status.models.OrderModel;
-import com.accenture_project.status.models.ProductModel;
+import br.com.market.payments.dto.ProductStockDTO;
+import br.com.market.payments.exception.NoProductException;
+import br.com.market.payments.model.OrderModel;
+import br.com.market.payments.model.ProductModel;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.UUID;
 
 @Component
 public class ProductsMapper {
 
-    public List<ProductModel> toProductsModel(List<ProductDTO> productsDTO, OrderModel orderModel) {
-        if (productsDTO == null) {
+    public List<ProductModel> toProductsModel(List<ProductStockDTO> productStockDTOS, OrderModel orderModel) {
+        if (productStockDTOS == null) {
             throw new NoProductException("productsDTO cannot be null");
         }
 
-        return productsDTO.stream().map(productDTO -> {
+        return productStockDTOS.stream().map(productDTO -> {
             var product = new ProductModel();
 
             product.setId(productDTO.id());

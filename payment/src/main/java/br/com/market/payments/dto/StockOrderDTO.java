@@ -1,13 +1,10 @@
 package br.com.market.payments.dto;
 
-import lombok.Data;
-
-import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
-@Data
-public class StockOrderDTO {
-    private UUID order_id;
-    private UUID client_id;
-    private boolean approval;
+public record StockOrderDTO(UUID orderId,
+                            List<ProductStockDTO> products,
+                            LocalDateTime orderDateTime) {
 }

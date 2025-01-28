@@ -1,9 +1,6 @@
 package br.com.market.payments.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,8 +11,8 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @Entity
+@Table(name = "tb_payment")
 public class PaymentModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

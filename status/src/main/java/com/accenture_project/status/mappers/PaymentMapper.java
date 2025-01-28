@@ -11,8 +11,8 @@ public class PaymentMapper {
 
         payment.setId(paymentDTO.id());
         payment.setOrderId(paymentDTO.orderId());
-        payment.setDatetime(paymentDTO.dateTime());
-        payment.setTotalValue(paymentDTO.totalValue());
+        payment.setDatetime(paymentDTO.dateTimeOfPayment());
+        payment.setTotalValue(paymentDTO.totalPrice());
 
         return payment;
     }

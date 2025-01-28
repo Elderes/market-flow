@@ -22,7 +22,7 @@ public class ProductModel implements Serializable {
     @Column(nullable = false)
     private Integer quantity;
 
-    private BigDecimal price;
+    private BigDecimal unitPrice;
 
     @JsonIgnore
     @ManyToOne

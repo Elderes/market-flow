@@ -11,14 +11,14 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
-    @Value("${queue.send.payment}")
-    private String queueSendPayment;
+    @Value("${queue.status.payment}")
+    private String queueStatusPayment;
 
     @Value("${exchange.direct}")
     private String exchangeDirect;
 
-    @Value("${routing.key.send.payment}")
-    private String routingKeySendPayment;
+    @Value("${routing.key.status.payment}")
+    private String routingKeyStatusPayment;
 
     // json to object converter configuration
     @Bean
@@ -28,8 +28,8 @@ public class RabbitMQConfig {
 
     // Payment queue setup for shipping
     @Bean
-    public Queue queueStockOrder() {
-        return new Queue(queueSendPayment, true);
+    public Queue queueStatusPayment() {
+        return new Queue(queueStatusPayment, true);
     }
 
     // Exchange configuration
@@ -40,7 +40,7 @@ public class RabbitMQConfig {
 
     // Bindings configurations
     @Bean
-    public Binding bindingQueueSendDirect(Queue queue, DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(routingKeySendPayment);
+    public Binding bindingQueueSendDirect(DirectExchange exchange) {
+        return BindingBuilder.bind(queueStatusPayment()).to(exchange).with(routingKeyStatusPayment);
     }
 }

@@ -1,6 +1,7 @@
 package com.accenture_project.status.services;
 
 import com.accenture_project.status.dtos.StatusDTO;
+import com.accenture_project.status.exceptions.NoOrderException;
 import com.accenture_project.status.exceptions.NoStatusException;
 import com.accenture_project.status.mappers.StatusMapper;
 import com.accenture_project.status.models.OrderModel;
@@ -44,7 +45,7 @@ public class StatusService {
     }
 
     public void paymentOrder(PaymentModel payment) {
-        var order = orderRepository.findById(payment.getOrderId()).orElseThrow(() -> new RuntimeException("Order not found"));
+        var order = orderRepository.findById(payment.getOrderId()).orElseThrow(() -> new NoOrderException("Order not found"));
         order.setTotalPrice(payment.getTotalValue());
 
         var status = statusRepository.findByOrderId(payment.getOrderId());

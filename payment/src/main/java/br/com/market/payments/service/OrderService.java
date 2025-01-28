@@ -1,7 +1,8 @@
 package br.com.market.payments.service;
 
-import br.com.market.payments.dto.PagamentoDto;
+import br.com.market.payments.exception.NoOrderException;
 import br.com.market.payments.model.OrderModel;
+import br.com.market.payments.model.StockModel;
 import br.com.market.payments.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -14,28 +15,41 @@ import java.util.UUID;
 public class OrderService {
 
     private final RabbitTemplate rabbitTemplate;
+
+    private final PaymentService paymentService;
+
     private final OrderRepository orderRepository;
 
     public void saveOrder(OrderModel order) {
-        System.out.println(order.getId());
         orderRepository.save(order);
     }
 
-    public OrderModel getOrderById(UUID id) {
-        return orderRepository.findById(id).orElse(null);
+    public OrderModel getOrder(UUID id) {
+        return orderRepository.findById(id).orElseThrow(() -> new NoOrderException("Order not found"));
     }
 
-    public void validarCompra(PagamentoDto pagamentoDto) {
+    public OrderModel updateOrder(OrderModel order, StockModel stock) {
+        order.setProducts(stock.getProducts());
+        order.setTotalPrice(paymentService.calculateTotal(order.getProducts()));
 
-
+        return orderRepository.save(order);
     }
 
-    private void enviarObjetoParaFila(String nomeFila, PedidoDTO pedidoDTO) {
-        // Envia o objeto para a fila especificada
+//    public OrderModel getOrderById(UUID id) {
+//        return orderRepository.findById(id).orElse(null);
+//    }
+//
+//    public void validarCompra(PagamentoDto pagamentoDto) {
+//
+//
+//    }
 
-        rabbitTemplate.convertAndSend("exchange.direct", "routing.key.send.payment", "teste"); //pedido
-        System.out.println("Objeto enviado para a fila: " + nomeFila);
-    }
+//    private void enviarObjetoParaFila(String nomeFila, PedidoDTO pedidoDTO) {
+//        // Envia o objeto para a fila especificada
+//
+//        rabbitTemplate.convertAndSend("exchange.direct", "routing.key.send.payment", "teste"); //pedido
+//        System.out.println("Objeto enviado para a fila: " + nomeFila);
+//    }
 
 //    public List<ProductModel> mapProducts(List<ProductDTO> productDTOs) {
 //        return productDTOs.stream().map(dto -> {

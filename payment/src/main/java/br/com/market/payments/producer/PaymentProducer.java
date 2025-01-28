@@ -1,5 +1,6 @@
 package br.com.market.payments.producer;
 
+import br.com.market.payments.dto.PaymentDTO;
 import br.com.market.payments.model.OrderModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -14,10 +15,10 @@ public class PaymentProducer {
     @Value("${exchange.direct}")
     private String exchange;
 
-    @Value("${queue.send.payment}")
+    @Value("${queue.status.payment}")
     private String routingKey;
 
-    public void publishSend(OrderModel payment) {
+    public void publishPayment(PaymentDTO payment) {
         rabbitTemplate.convertAndSend(exchange, routingKey, payment);
     }
 }
