@@ -1,5 +1,6 @@
 package br.summer_academy.stock.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 import br.summer_academy.stock.dto.OrderRecordDTO;
 import br.summer_academy.stock.dto.ProductRecordDTO;
 import br.summer_academy.stock.dto.StockOrderDTO;
-import br.summer_academy.stock.model.Order;
 import br.summer_academy.stock.model.Product;
 import br.summer_academy.stock.repository.StockRepository;
 
@@ -36,6 +36,7 @@ public class StockService {
     }
 
     public boolean checkIfAvailable(List<Product> products) {
+        if (products.contains(null)) return false;
         for (Product p : products) {
             Product stockProduct = repository.findByName(p.getName()); // Search by name
             if (stockProduct == null || stockProduct.getQuantity() < p.getQuantity()) { // Need exists in stock and have necessary amount
@@ -47,11 +48,16 @@ public class StockService {
 
     // Mapping DTO to Entity
     public List<Product> mapProducts(List<ProductRecordDTO> productDTOs) {
-        return productDTOs.stream().map(dto -> {
+        List<Product> products = new ArrayList<>();
+    
+        System.out.println("\n");
+        for (ProductRecordDTO dto : productDTOs) {
             Product stockProduct = repository.findByName(dto.name());
-            
+    
             if (stockProduct == null) {
-                throw new IllegalArgumentException("Product with name '" + dto.name() + "' not found.");
+                System.out.print("Product with name '" + dto.name() + "' not found.");
+                products.add(null); // Insert null for missing product
+                continue; // Skip this product instead of returning null
             }
     
             Product product = new Product();
@@ -59,9 +65,10 @@ public class StockService {
             product.setName(dto.name());
             product.setQuantity(dto.quantity());
             product.setPrice(stockProduct.getPrice());
-            return product;
-        }).collect(Collectors.toList());
-    }
+            products.add(product);
+        }
+        return products;
+    }    
 
     // Approve and send to Payment
     public void approveOrderAndValue(OrderRecordDTO order) {
