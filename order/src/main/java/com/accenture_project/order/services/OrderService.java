@@ -2,13 +2,12 @@ package com.accenture_project.order.services;
 
 import com.accenture_project.order.dtos.OrderDTO;
 import com.accenture_project.order.exceptions.NoOrderException;
-import com.accenture_project.order.mappers.ClientUpdateMapper;
+import com.accenture_project.order.mappers.OrderProducerMapper;
 import com.accenture_project.order.mappers.OrderUpdateMapper;
 import com.accenture_project.order.models.OrderModel;
 import com.accenture_project.order.models.ProductModel;
 import com.accenture_project.order.producers.OrderProducer;
 import com.accenture_project.order.repositories.OrderRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +36,8 @@ public class OrderService {
     private final OrderUpdateMapper orderUpdateMapper;
 
     private final JavaMailSender mailSender;
-    private final ClientUpdateMapper clientUpdateMapper;
+
+    private final OrderProducerMapper orderProducerMapper;
 
     @Value("{$spring.mail.username}")
     private String emailFrom;
@@ -47,7 +47,8 @@ public class OrderService {
     }
 
     public void publishOrder(OrderModel order) {
-        orderProducer.publishOrder(order);
+        var orderProducerDTP = orderProducerMapper.toOrderProducerDTO(order);
+        orderProducer.publishOrder(orderProducerDTP);
     }
 
     public void validateOrder(OrderModel order) {

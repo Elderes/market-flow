@@ -5,8 +5,6 @@ import com.accenture_project.order.models.OrderModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
 @RequiredArgsConstructor
 @Component
 public class OrderUpdateMapper {
