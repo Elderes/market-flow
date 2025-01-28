@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.summer_academy.stock.dto.OrderRecordDTO;
+import br.summer_academy.stock.model.Address;
+import br.summer_academy.stock.model.Client;
+import br.summer_academy.stock.model.Order;
 import br.summer_academy.stock.model.Product;
 import br.summer_academy.stock.service.StockService;
 
@@ -18,8 +21,28 @@ public class StockConsumer {
     @RabbitListener(queues = "${rabbitmq.queue.stock.order}")
     public void receiveOrder(OrderRecordDTO order) {
         List<Product> products = service.mapProducts(order.products());
+        Order orderStock = new Order();
+        Client client = new Client();
+        Address address = new Address();
+
+        address.setCountry(order.client().address().country());
+        address.setState(order.client().address().state());
+        address.setCity(order.client().address().city());
+        address.setNeighborhood(order.client().address().neighborhood());
+        address.setNumber(order.client().address().number());
+
+        client.setId(order.client().id());
+        client.setName(order.client().name());
+        client.setCellphone(order.client().cellphone());
+        client.setEmail(order.client().email());
+        client.setAddress(address);
         
-        System.out.println("\n\nClient name: " + order.client().name());
+        orderStock.setId(order.id());
+        orderStock.setClient(client);
+        orderStock.setProducts(products);
+        orderStock.setOrderDateTime(order.orderDateTime());
+        
+        System.out.println("\nClient name: " + order.client().name());
         System.out.println("Order id: " + order.id());
         service.printProductList(products);
 
