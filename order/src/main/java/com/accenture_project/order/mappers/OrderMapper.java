@@ -31,7 +31,6 @@ public class OrderMapper {
         products.forEach(product -> product.setOrder(order));
         order.setProducts(products);
         order.setOrderDateTime(LocalDateTime.now());
-        order.setTotalPrice();
 
         return order;
     }

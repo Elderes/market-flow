@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import br.summer_academy.stock.dto.OrderRecordDTO;
 import br.summer_academy.stock.dto.ProductRecordDTO;
 import br.summer_academy.stock.dto.StockOrderDTO;
+import br.summer_academy.stock.model.Order;
 import br.summer_academy.stock.model.Product;
 import br.summer_academy.stock.repository.StockRepository;
 
@@ -96,6 +97,11 @@ public class StockService {
             updatedStockProduct.setQuantity(updatedQuantity);
             repository.save(updatedStockProduct); // Need to mach UUID
         }
+    }
+
+    public void sendOrderToStatus(OrderRecordDTO dto) {
+        rabbitTemplate.convertAndSend(exchange_direct, key_stock_to_status, dto);
+        System.out.println("Order sent to Status.");
     }
 
 }

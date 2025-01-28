@@ -20,4 +20,15 @@ public class ProductsMapper {
             return product;
         }).toList();
     }
+
+    public ProductModel toProductModel(ProductDTO productDTO) {
+
+        var product = new ProductModel();
+
+        product.setName(productDTO.name());
+        product.setQuantity(productDTO.quantity());
+        product.setUnitPrice(productDTO.unitPrice());
+
+        return product;
+    }
 }

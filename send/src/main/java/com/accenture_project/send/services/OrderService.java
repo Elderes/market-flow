@@ -75,11 +75,4 @@ public class OrderService {
         return orderRepository.findById(id)
                 .orElseThrow(() -> new NoOrderException("Order not found with id:" + id));
     }
-
-    public void deleteById(UUID id) {
-        if (getOrder(id) == null) {
-            throw new NoOrderException("Order not found with id:" + id);
-        }
-        orderRepository.deleteById(id);
-    }
 }

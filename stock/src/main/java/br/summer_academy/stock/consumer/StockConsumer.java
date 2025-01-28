@@ -18,17 +18,20 @@ public class StockConsumer {
     @RabbitListener(queues = "${rabbitmq.queue.stock.order}")
     public void receiveOrder(OrderRecordDTO order) {
         List<Product> products = service.mapProducts(order.products());
+        
         System.out.println("\n\nClient name: " + order.client().name());
-        service.printProductList(products);
         System.out.println("Order id: " + order.id());
+        service.printProductList(products);
+
         if (service.checkIfAvailable(products)) {
             System.out.println("Products available");
-            service.approveOrderAndValue(order);
+            service.approveOrderAndValue(order); // Foward to payment
+            service.sendOrderToStatus(order); // Foward to status same order
         }
         else
         {
             System.out.println("Products unavailable");
-            service.disapproveOrderAndValue(order);
+            service.disapproveOrderAndValue(order); // Foward to payment
         }
     }
 
