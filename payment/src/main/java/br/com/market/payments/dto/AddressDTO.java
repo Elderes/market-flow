@@ -1,6 +1,9 @@
 package br.com.market.payments.dto;
 
-public record AddressDTO(String country,
+import java.util.UUID;
+
+public record AddressDTO(UUID id,
+                         String country,
                          String state,
                          String city,
                          String neighborhood,

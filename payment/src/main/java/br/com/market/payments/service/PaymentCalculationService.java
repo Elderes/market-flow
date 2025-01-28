@@ -24,12 +24,12 @@ public class PaymentCalculationService {
         BigDecimal total = BigDecimal.ZERO;
 
         for (ProductDTO product : products) {
-            if (product.price() != null && product.quantity() > 0) {
-                BigDecimal productTotal = product.price().multiply(BigDecimal.valueOf(product.quantity()));
+            if (product.unitPrice() != null && product.quantity() > 0) {
+                BigDecimal productTotal = product.unitPrice().multiply(BigDecimal.valueOf(product.quantity()));
                 total = total.add(productTotal);
             }
         }
-
+        System.out.println("Calculo feito");
         return total;
     }
 

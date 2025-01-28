@@ -10,5 +10,4 @@ public class StockOrderDTO {
     private UUID order_id;
     private UUID client_id;
     private boolean approval;
-    private BigDecimal totalValue;
 }

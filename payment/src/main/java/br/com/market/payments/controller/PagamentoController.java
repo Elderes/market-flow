@@ -1,11 +1,8 @@
 package br.com.market.payments.controller;
 
 import br.com.market.payments.dto.PagamentoDto;
-import br.com.market.payments.service.PagamentoService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

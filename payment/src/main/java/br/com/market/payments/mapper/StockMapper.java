@@ -14,7 +14,6 @@ public class StockMapper {
         stock.setOrder_id(stockOrderDTO.getOrder_id());
         stock.setClient_id(stockOrderDTO.getClient_id());
         stock.setApproval(stockOrderDTO.isApproval());
-        stock.setTotalValue(stockOrderDTO.getTotalValue());
 
         return stock;
     }

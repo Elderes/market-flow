@@ -12,6 +12,7 @@ import java.util.UUID;
 @Table(name = "tb_address")
 public class AddressModel implements Serializable {
     @Id
+    //@GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false)
@@ -31,4 +32,5 @@ public class AddressModel implements Serializable {
 
     @Column(nullable = false)
     private Integer number;
+
 }
