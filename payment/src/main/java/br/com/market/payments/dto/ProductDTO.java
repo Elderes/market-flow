@@ -1,5 +1,7 @@
 package br.com.market.payments.dto;
 
-public record ProductDTO(String name,
-                         Integer quantity){
+import java.math.BigDecimal;
+import java.util.UUID;
+
+public record ProductDTO(UUID id, String name, Integer quantity, BigDecimal price){
 }

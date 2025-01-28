@@ -1,6 +1,8 @@
 package br.com.market.payments.dto;
 
-public record ClientDTO(String name,
+import java.util.UUID;
+
+public record ClientDTO(UUID id, String name,
                         String cellphone,
                         String email,
                         AddressDTO address) {
