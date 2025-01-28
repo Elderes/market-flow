@@ -24,13 +24,4 @@ public class PagamentoAMPQConfig {
         return rabbitTemplate;
     }
 
-//    @Bean
-//    public RabbitAdmin criaRabbitAdmin(ConnectionFactory conn){
-//        return new RabbitAdmin(conn);
-//    }
-
-//    @Bean
-//    public ApplicationListener<ApplicationReadyEvent> inicializaAdmin(RabbitAdmin rabbitAdmin){
-//        return event -> rabbitAdmin.initialize();
-//    }
 }

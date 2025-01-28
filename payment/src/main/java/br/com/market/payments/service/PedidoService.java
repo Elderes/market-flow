@@ -31,21 +31,12 @@ public class PedidoService {
         System.out.println("Serviço rodando");
 
 
-//        if (!pedidos.isEmpty()) {
-           //PedidoDTO pedidoDTO = pedidos.get(pedidos.size() - 1);
-
         if(true){
             PedidoDTO pedidoDTO = pedidos.get(pedidos.size() - 1);
 
-//            BigDecimal totalCompra = BigDecimal.ZERO; // Inicialize corretamente o BigDecimal com ZERO
-//            for (PedidoDTO.ProductDTO product : pedidoDTO.getProducts()) {
-//                totalCompra = totalCompra.add(product.getTotalPrice()); // Use o método add para somar
-//            }
-//            pedidoDTO.setTotalCompra(totalCompra);
 
             if (true) {
-                //if (pagamentoDto.getValue().compareTo(pedidoDTO.getTotalCompra()) >= 0) {
-                //enviarMensagemParaFila("queue.send.payment", "Compra validada: " + pedidoDTO.getPedidoId());
+
                 enviarObjetoParaFila("queue.send.payment", pedidoDTO);
             }
 

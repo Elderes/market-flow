@@ -1,10 +1,14 @@
 package br.com.market.payments.service;
 
 import br.com.market.payments.dto.PayDTO;
+import br.com.market.payments.dto.ProductDTO;
 import br.com.market.payments.model.OrderModel;
 import br.com.market.payments.producer.PaymentProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -24,7 +28,13 @@ public class PayService {
         }
     }
 
+
+
     public void sendQueue(OrderModel orderModel) {
         paymentProducer.publishSend(orderModel);
     }
+
+
 }
+
+

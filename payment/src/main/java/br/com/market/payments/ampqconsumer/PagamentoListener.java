@@ -1,21 +1,21 @@
-package br.com.market.payments.ampqconsumer;
-
-import br.com.market.payments.dto.EstoqueDTO;
-import br.com.market.payments.dto.PagamentoDto;
-import br.com.market.payments.dto.PedidoDTO;
-import br.com.market.payments.model.Estoque;
-import br.com.market.payments.model.Pagamento;
-import br.com.market.payments.repository.EstoqueRepository;
-import br.com.market.payments.repository.PagamentoRepository;
-import br.com.market.payments.repository.PedidoRepository;
-import br.com.market.payments.service.PagamentoService;
-import br.com.market.payments.service.PedidoService;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.stereotype.Component;
-
-@Component
-public class PagamentoListener {
+//package br.com.market.payments.ampqconsumer;
+//
+//import br.com.market.payments.dto.EstoqueDTO;
+//import br.com.market.payments.dto.PagamentoDto;
+//import br.com.market.payments.dto.PedidoDTO;
+//import br.com.market.payments.model.Estoque;
+//import br.com.market.payments.model.Pagamento;
+//import br.com.market.payments.repository.EstoqueRepository;
+//import br.com.market.payments.repository.PagamentoRepository;
+//import br.com.market.payments.repository.PedidoRepository;
+//import br.com.market.payments.service.PagamentoService;
+//import br.com.market.payments.service.PedidoService;
+//import org.springframework.amqp.rabbit.annotation.RabbitListener;
+//import org.springframework.amqp.rabbit.core.RabbitTemplate;
+//import org.springframework.stereotype.Component;
+//
+//@Component
+//public class PagamentoListener {
 
 //    private final PedidoRepository pedidoRepository;
 //    private final EstoqueRepository estoqueRepository;
@@ -135,4 +135,4 @@ public class PagamentoListener {
 //            e.printStackTrace();
 //        }
 //    }
-}
+//}
