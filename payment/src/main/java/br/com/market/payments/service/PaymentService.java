@@ -37,26 +37,27 @@ public class PaymentService {
 
     public void savePaymentOrder(OrderDTO order) {
         var payment = new PaymentModel();
-
+    
         payment.setOrderId(order.id());
         payment.setDateTimeOfPayment(LocalDateTime.now());
-        payment.setHasPaid(false);
+        payment.setHasPaid(false); // Explicitly set the initial value
         payment.setTotalPrice(calculateTotal(order.products()));
-        payment.setStockConfirmed(false);
+        payment.setStockConfirmed(false); // Explicitly set the initial value
         payment.setEmailClient(order.client().email());
-
+    
         paymentRepository.save(payment);
     }
 
     public void stockConfimation(StockOrderDTO stockOrder) {
-        if (!stockOrder.approval()) {
-            // email
-        }
-
-        var payment = paymentRepository.findByOrderId(stockOrder.orderId()).orElseThrow(() -> new PaymentNotFoundException("Payment not found"));
-
+        var payment = paymentRepository.findByOrderId(stockOrder.orderId())
+                .orElseThrow(() -> new PaymentNotFoundException("Payment not found"));
+    
         payment.setStockConfirmed(true);
+        payment.setHasPaid(true);
+    
+        paymentRepository.save(payment); // Persist updated state
         sendEmail(payment);
+        logger.info("Payment approved.");
     }
 
     public BigDecimal calculateTotal(List<ProductDTO> products) {

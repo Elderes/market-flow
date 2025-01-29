@@ -29,6 +29,7 @@ public class PaymentConsumer {
 
     @RabbitListener(queues = "${queue.payment.stock}")
     public void listenStock(StockOrderDTO stockOrderDTO) {
+        System.out.println("Received from stock: " + stockOrderDTO.approval());
         try {
             if (!stockOrderDTO.approval()) {
                 // TODO -> mandar email
