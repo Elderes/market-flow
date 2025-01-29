@@ -6,6 +6,11 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+/**
+ * Producer class responsible for sending status messages to a RabbitMQ exchange.
+ * It publishes the status information to a specified exchange and routing key.
+ */
+
 @RequiredArgsConstructor
 @Component
 public class StatusProducer {

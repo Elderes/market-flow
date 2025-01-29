@@ -10,10 +10,8 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 /**
- * RabbitMQ message consumer responsible for processing orders and sending email notifications.
- * <p>
- * - consumerMessage: Receives a message with order details, saves it to the database, and sends a confirmation email.
- * If any error occurs during processing, it is logged.
+ * Listens to messages from RabbitMQ queues and processes them.
+ * This class consumes messages related to order status and payment status, invoking corresponding service methods.
  */
 
 @RequiredArgsConstructor

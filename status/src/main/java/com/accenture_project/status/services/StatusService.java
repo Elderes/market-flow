@@ -14,6 +14,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Service class that handles business logic related to order status.
+ * It manages saving, updating, retrieving, and deleting order statuses,
+ * and also interacts with the message producer for status updates.
+ */
+
 @RequiredArgsConstructor
 @Service
 public class StatusService {

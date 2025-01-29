@@ -48,7 +48,7 @@ These services communicate asynchronously using RabbitMQ, ensuring decoupling an
 ### Order Service
 - **Responsibilities**:
   - Receives customer orders.
-  - Validates order details (e.g., client information, products, etc.).
+  - Validates order details (client information, products, etc.).
   - Publishes order events to RabbitMQ for processing by other services.
   - Sends confirmation emails to customers regarding their order status.
   - Manages client and address information related to orders.
@@ -89,6 +89,7 @@ These services communicate asynchronously using RabbitMQ, ensuring decoupling an
 - **Running the Service**
   - Database: Ensure a database(MySQL) is connected for storing orders.
   - Java: Make sure you have JDK 21 or above installed.
+  - Service Configuration: Set up necessary properties for exchange and routing keys in the application.properties file.
 - **To start application**
   - http://localhost:8080/swagger-ui/index.html#
 
@@ -137,11 +138,31 @@ These services communicate asynchronously using RabbitMQ, ensuring decoupling an
 
 ### Status Service
 - **Responsibilities**:
-  - Provides real-time tracking and updates for orders.
-  - Consumes events from other services to update order status.
+  - Receives order status and payment updates from other services.
+  - Saves the status of orders in the database.
+  - Publishes status updates to RabbitMQ for other services to process.
+  - Manages the processing of order statuses, including updating payment information and triggering status changes.
 - **Endpoints**:
-  - `GET /status/{orderId}`: Retrieve the current order status.
-  - `GET /status/all`: Get all order statuses.
+  - `GET /all_status`: Retrieves a list of all order statuses.
+    - Response:
+      - 200 OK: Returns a list of all order statuses.
+      - 404 Not Found: No statuses found.
+  - `GET /status/{id}`: Retrieves a specific order status by its ID.
+    - Response:
+      - 200 OK: Returns the details of the order status.
+      - 404 Not Found: Status not found with the given ID.
+  - `DELETE /status/{id}`: Deletes a specific order status by its ID.
+    - Response:
+      - 200 OK: Status deleted successfully.
+      - 404 Not Found: Status not found with the given ID.
+      - 500 Internal Server Error: Error while deleting the status.
+- **Running the Service**
+  - Database: Ensure a database (MySQL) is connected for storing order statuses.
+  - Java: Make sure you have JDK 21 or above installed.
+  - RabbitMQ: Ensure RabbitMQ is configured for message consumption and production.
+  - Service Configuration: Set up necessary properties for exchange and routing keys in the application.properties file.
+- **To start application**
+  - http://localhost:8083/swagger-ui/index.html#
 
 ---
 

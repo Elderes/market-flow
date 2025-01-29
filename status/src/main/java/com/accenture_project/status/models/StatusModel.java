@@ -9,6 +9,11 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * Entity representing the status of an order.
+ * It includes details such as order ID, payment status, last update time, client email, and total price.
+ */
+
 @Getter
 @Setter
 @Entity

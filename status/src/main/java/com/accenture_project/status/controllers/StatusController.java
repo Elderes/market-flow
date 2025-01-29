@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Handles HTTP requests related to order statuses.
+ * This class provides endpoints for retrieving and deleting status information.
+ */
+
 @RequiredArgsConstructor
 @RestController
 public class StatusController {

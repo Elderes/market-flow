@@ -12,6 +12,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Configures RabbitMQ setup for sending status messages.
+ * This class defines beans for queue, exchange, routing, and message converter used in the RabbitMQ setup.
+ */
+
 @Configuration
 public class RabbitMQConfig {
 
