@@ -34,7 +34,7 @@ public class PaymentConsumer {
             if (!stockOrderDTO.approval()) {
                 // TODO -> mandar email
             }
-            paymentService.stockConfimation(stockOrderDTO);
+            paymentService.stockConfirmation(stockOrderDTO);
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
