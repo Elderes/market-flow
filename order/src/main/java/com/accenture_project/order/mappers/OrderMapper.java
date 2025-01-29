@@ -12,25 +12,13 @@ import java.time.LocalDateTime;
 public class OrderMapper {
 
     private final ClientMapper clientMapper;
-    private final ProductsMapper productsMapper;
 
     public OrderModel toOrderModel(OrderDTO orderDTO) {
         var order = new OrderModel();
 
         order.setClient(clientMapper.toClientModel(orderDTO.client()));
-
-        var products = productsMapper.toProductModels(orderDTO.products());
-
-        products.forEach(product -> product.setOrder(order));
-        order.setProducts(products);
         order.setOrderDateTime(LocalDateTime.now());
 
         return order;
     }
-
-
-
-
-
-
 }

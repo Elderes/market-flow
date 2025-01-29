@@ -1,19 +1,17 @@
 package com.accenture_project.order.services;
 
 import com.accenture_project.order.dtos.OrderDTO;
+import com.accenture_project.order.dtos.ProductDTO;
 import com.accenture_project.order.exceptions.NoOrderException;
 import com.accenture_project.order.mappers.OrderProducerMapper;
 import com.accenture_project.order.mappers.OrderUpdateMapper;
 import com.accenture_project.order.models.OrderModel;
-import com.accenture_project.order.models.ProductModel;
 import com.accenture_project.order.producers.OrderProducer;
 import com.accenture_project.order.repositories.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
@@ -34,10 +32,10 @@ public class OrderService {
     private final ProductService productService;
 
     private final OrderUpdateMapper orderUpdateMapper;
+    private final OrderProducerMapper orderProducerMapper;
 
     private final JavaMailSender mailSender;
 
-    private final OrderProducerMapper orderProducerMapper;
 
     @Value("{$spring.mail.username}")
     private String emailFrom;
@@ -46,42 +44,42 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    public void publishOrder(OrderModel order) {
-        var orderProducerDTP = orderProducerMapper.toOrderProducerDTO(order);
-        orderProducer.publishOrder(orderProducerDTP);
+    public void publishOrder(OrderModel order, List<ProductDTO> productsDTO) {
+        var message = orderProducerMapper.toOrderProducerDTO(order, productsDTO);
+        orderProducer.publishOrder(message);
     }
 
-    public void validateOrder(OrderModel order) {
+    public void validateOrder(OrderModel order, List<ProductDTO> productDTO) {
         clientService.validateClient(order.getClient());
-        productService.validateProducts(order.getProducts());
+        productService.validateProducts(productDTO);
     }
 
-    public void sendEmail(OrderModel order) {
-        try {
-            logger.info("Sending email to {}", order.getClient().getEmail());
-
-            var message = new SimpleMailMessage();
-            message.setTo(order.getClient().getEmail());
-            message.setFrom(emailFrom);
-            message.setSubject("Pedido em andamento");
-            message.setText("Olá " + order.getClient().getName() + ",\n\n" +
-                    "Seu pedido está sendo processado, aguarde email de confirmação de estoque, e email para pagamento!" +
-                    "Detalhes do pedido:\n");
-
-            for (ProductModel product : order.getProducts()) {
-                message.setText(message.getText() +
-                        "Produto: " + product.getName() + "\n" +
-                        "Quantidade: " + product.getQuantity() + "\n\n");
-            }
-
-            message.setText(message.getText() +
-                    "Obrigado por comprar conosco! Estamos preparando o pedido.");
-
-            mailSender.send(message);
-        } catch (MailException e) {
-            logger.error("Error sending email to customer: {}", e.getMessage());
-        }
-    }
+//    public void sendEmail(OrderModel order) {
+//        try {
+//            logger.info("Sending email to {}", order.getClient().getEmail());
+//
+//            var message = new SimpleMailMessage();
+//            message.setTo(order.getClient().getEmail());
+//            message.setFrom(emailFrom);
+//            message.setSubject("Pedido em andamento");
+//            message.setText("Olá " + order.getClient().getName() + ",\n\n" +
+//                    "Seu pedido está sendo processado, aguarde email de confirmação de estoque, e email para pagamento!" +
+//                    "Detalhes do pedido:\n");
+//
+//            for (ProductModel product : order.getProducts()) {
+//                message.setText(message.getText() +
+//                        "Produto: " + product.getName() + "\n" +
+//                        "Quantidade: " + product.getQuantity() + "\n\n");
+//            }
+//
+//            message.setText(message.getText() +
+//                    "Obrigado por comprar conosco! Estamos preparando o pedido.");
+//
+//            mailSender.send(message);
+//        } catch (MailException e) {
+//            logger.error("Error sending email to customer: {}", e.getMessage());
+//        }
+//    }
 
     public List<OrderModel> getOrders() {
         var orders = orderRepository.findAll();

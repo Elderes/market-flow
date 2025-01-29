@@ -1,6 +1,9 @@
 package com.accenture_project.order.configs.rabbitmq;
 
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.FanoutExchange;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +31,6 @@ public class RabbitMQConfig {
         return new Queue(queueStockOrder, true);
     }
 
-    // Queue configuration for payment
     @Bean
     public Queue queuePaymentOrder() {
         return new Queue(queuePaymentOrder, true);
@@ -39,7 +41,6 @@ public class RabbitMQConfig {
         return new FanoutExchange(exchangeFanout);
     }
 
-    // Bindings configurations
     @Bean
     public Binding bindingQueueStockOrderFanout(FanoutExchange exchange) {
         return BindingBuilder.bind(queueStockOrder()).to(exchange);

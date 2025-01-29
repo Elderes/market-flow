@@ -32,10 +32,10 @@ public class OrderController {
         try {
             var order = orderMapper.toOrderModel(orderDTO);
 
-            orderService.validateOrder(order);
+            orderService.validateOrder(order, orderDTO.products());
             orderService.saveOrder(order);
-            orderService.publishOrder(order);
-            orderService.sendEmail(order);
+            orderService.publishOrder(order, orderDTO.products());
+//            orderService.sendEmail(order);
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Order created successfully!");
         } catch (InvalidClientException | InvalidAddressException | InvalidProductException e) {
@@ -101,7 +101,7 @@ public class OrderController {
         try {
             var order = orderMapper.toOrderModel(orderDTO);
 
-            orderService.validateOrder(order);
+            orderService.validateOrder(order, orderDTO.products());
             orderService.updateOrder(id, orderDTO);
 
             logger.info("Order successfully updated");

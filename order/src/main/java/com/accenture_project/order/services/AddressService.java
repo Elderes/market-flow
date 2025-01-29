@@ -3,7 +3,6 @@ package com.accenture_project.order.services;
 import com.accenture_project.order.dtos.AddressDTO;
 import com.accenture_project.order.exceptions.InvalidAddressException;
 import com.accenture_project.order.exceptions.NoAddressException;
-import com.accenture_project.order.exceptions.NoClientException;
 import com.accenture_project.order.mappers.AddressUpdateMapper;
 import com.accenture_project.order.models.AddressModel;
 import com.accenture_project.order.repositories.AddressRepository;
@@ -60,13 +59,6 @@ public class AddressService {
     public AddressModel getAddress(UUID id) {
         return addressRepository.findById(id)
                 .orElseThrow(() -> new NoAddressException("Address not found with id:" + id));
-    }
-
-    public void deleteById(UUID id) {
-        if (getAddress(id) == null) {
-            throw new NoAddressException("Address not found with id:" + id);
-        }
-        addressRepository.deleteById(id);
     }
 
     public void updateAddress(UUID id, AddressDTO addressDTO) {

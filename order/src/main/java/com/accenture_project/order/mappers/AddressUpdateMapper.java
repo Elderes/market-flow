@@ -21,7 +21,9 @@ public class AddressUpdateMapper {
 
 
         return addressModel;
-    }public AddressModel toAddressModel(AddressModel addressModel, ClientDTO clientDTO) {
+    }
+
+    public AddressModel toAddressModel(AddressModel addressModel, ClientDTO clientDTO) {
         addressModel.setCountry(clientDTO.address().country());
         addressModel.setState(clientDTO.address().state());
         addressModel.setCity(clientDTO.address().city());

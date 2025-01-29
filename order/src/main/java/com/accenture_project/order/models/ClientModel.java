@@ -7,7 +7,8 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.util.UUID;
 
-@Getter @Setter
+@Getter
+@Setter
 @Entity
 @Table(name = "tb_client")
 public class ClientModel implements Serializable {
@@ -27,6 +28,6 @@ public class ClientModel implements Serializable {
     private String email;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
-    private  AddressModel address;
+    @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
+    private AddressModel address;
 }

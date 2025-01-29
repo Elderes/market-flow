@@ -6,5 +6,6 @@ import java.util.UUID;
 
 public record StockOrderDTO(UUID orderId,
                             List<ProductStockDTO> products,
-                            LocalDateTime orderDateTime) {
+                            LocalDateTime orderDateTime,
+                            boolean approval) {
 }

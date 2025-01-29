@@ -1,8 +1,8 @@
 package com.accenture_project.order.controllers;
 
 import com.accenture_project.order.dtos.AddressDTO;
-import com.accenture_project.order.dtos.ClientDTO;
-import com.accenture_project.order.exceptions.*;
+import com.accenture_project.order.exceptions.InvalidAddressException;
+import com.accenture_project.order.exceptions.NoAddressException;
 import com.accenture_project.order.mappers.AddressMapper;
 import com.accenture_project.order.models.AddressModel;
 import com.accenture_project.order.services.AddressService;
@@ -67,23 +67,6 @@ public class AddressController {
             logger.error("Error retrieving address", e);
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    @DeleteMapping("/address/{id}")
-    public ResponseEntity<String> deleteAddress(@PathVariable("id") UUID id) {
-        try {
-            addressService.deleteById(id);
-
-            return ResponseEntity.ok().body("Address successfully deleted");
-        } catch (NoAddressException e) {
-            logger.error("Error retrieving address", e);
-
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error deleting address");
-        } catch (Exception e) {
-            logger.error("Error deleting address", e);
-
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Error deleting address");
         }
     }
 

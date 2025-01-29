@@ -41,15 +41,18 @@ public class PaymentConsumer {
     @RabbitListener(queues = "${queue.payment.stock}")
     public void listenStock(StockOrderDTO stockOrderDTO) {
         try {
-            var order = orderService.getOrder(stockOrderDTO.orderId());
-            var stock = stockOrderMapper.toStockModel(stockOrderDTO, order);
+            if (!stockOrderDTO.approval()) {
+                // TODO -> mandar email
+            }
+                var order = orderService.getOrder(stockOrderDTO.orderId());
+                var stock = stockOrderMapper.toStockModel(stockOrderDTO, order);
 
-            order = orderService.updateOrder(order, stock);
-            var payment = paymentService.savePayment(order.getId(), order);
+                order = orderService.updateOrder(order, stock);
+                var payment = paymentService.savePayment(order.getId(), order);
 
-            var paymentDTO = paymentMapper.toPaymentDTOMapper(payment);
+                var paymentDTO = paymentMapper.toPaymentDTOMapper(payment);
 
-            paymentService.paymentProducer(paymentDTO);
+                paymentService.paymentProducer(paymentDTO);
         } catch (Exception e) {
             logger.error(e.getMessage());
         }

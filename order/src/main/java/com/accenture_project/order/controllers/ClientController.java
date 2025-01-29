@@ -1,8 +1,9 @@
 package com.accenture_project.order.controllers;
 
 import com.accenture_project.order.dtos.ClientDTO;
-import com.accenture_project.order.dtos.OrderDTO;
-import com.accenture_project.order.exceptions.*;
+import com.accenture_project.order.exceptions.InvalidAddressException;
+import com.accenture_project.order.exceptions.InvalidClientException;
+import com.accenture_project.order.exceptions.NoClientException;
 import com.accenture_project.order.mappers.ClientMapper;
 import com.accenture_project.order.models.ClientModel;
 import com.accenture_project.order.services.ClientService;
@@ -68,23 +69,6 @@ public class ClientController {
             logger.error("Error retrieving client", e);
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    @DeleteMapping("/client/{id}")
-    public ResponseEntity<String> deleteClient(@PathVariable("id") UUID id) {
-        try {
-            clientService.deleteById(id);
-
-            return ResponseEntity.ok().body("Client successfully deleted");
-        } catch (NoClientException e) {
-            logger.error("Error retrieving client", e);
-
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error deleting client");
-        } catch (Exception e) {
-            logger.error("Error deleting client", e);
-
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Error deleting client");
         }
     }
 

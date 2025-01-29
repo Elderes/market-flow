@@ -18,4 +18,13 @@ public class AddressMapper {
 
         return address;
     }
+
+    public AddressDTO toAddressDTO(AddressModel addressModel) {
+        return new AddressDTO(addressModel.getCountry(),
+                addressModel.getState(),
+                addressModel.getCity(),
+                addressModel.getNeighborhood(),
+                addressModel.getStreet(),
+                addressModel.getNumber());
+    }
 }

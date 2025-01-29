@@ -1,7 +1,8 @@
 package com.accenture_project.order.services;
 
 import com.accenture_project.order.dtos.ClientDTO;
-import com.accenture_project.order.exceptions.*;
+import com.accenture_project.order.exceptions.InvalidClientException;
+import com.accenture_project.order.exceptions.NoClientException;
 import com.accenture_project.order.mappers.ClientUpdateMapper;
 import com.accenture_project.order.models.ClientModel;
 import com.accenture_project.order.repositories.ClientRepository;
@@ -58,13 +59,6 @@ public class ClientService {
     public ClientModel getClient(UUID id) {
         return clientRepository.findById(id)
                 .orElseThrow(() -> new NoClientException("Client not found with id:" + id));
-    }
-
-    public void deleteById(UUID id) {
-        if (getClient(id) == null) {
-            throw new NoClientException("Client not found with id:" + id);
-        }
-        clientRepository.deleteById(id);
     }
 
     public void updateClient(UUID id, ClientDTO clientDTO) {

@@ -21,4 +21,14 @@ public class ClientMapper {
 
         return client;
     }
+
+    public ClientDTO toClientDTO(ClientModel clientModel) {
+
+        var address = addressMapper.toAddressDTO(clientModel.getAddress());
+
+        return new ClientDTO(clientModel.getName(),
+                clientModel.getCellphone(),
+                clientModel.getEmail(),
+                address);
+    }
 }
