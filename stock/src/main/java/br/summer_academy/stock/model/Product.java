@@ -1,7 +1,6 @@
 package br.summer_academy.stock.model;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.JdbcTypeCode;

@@ -2,7 +2,6 @@ package br.summer_academy.stock.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +75,6 @@ public class StockService {
         dto.setOrderId(order.id());
         dto.setProducts(listOfProducts);
         dto.setApproval(true);
-        dto.setOrderDateTime(order.orderDateTime());
         rabbitTemplate.convertAndSend(exchange_direct, key_stock_to_payment, dto);
         listOfProducts.clear();
         System.out.println("Status: Approved");
@@ -86,7 +84,6 @@ public class StockService {
     public void disapproveOrderAndValue(OrderRecordDTO order) {
         StockOrderDTO dto = new StockOrderDTO();
         dto.setOrderId(order.id());
-        dto.setOrderDateTime(order.orderDateTime());
         dto.setApproval(false);
         rabbitTemplate.convertAndSend(exchange_direct, key_stock_to_payment, dto);
         System.out.println("Status: Not approved");
