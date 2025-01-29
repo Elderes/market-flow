@@ -1,7 +1,6 @@
 package br.com.market.payments.producer;
 
 import br.com.market.payments.dto.PaymentDTO;
-import br.com.market.payments.model.OrderModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;

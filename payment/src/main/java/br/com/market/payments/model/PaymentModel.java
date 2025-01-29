@@ -1,7 +1,6 @@
 package br.com.market.payments.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,4 +19,8 @@ public class PaymentModel {
     private BigDecimal totalPrice;
     private LocalDateTime dateTimeOfPayment;
     private UUID orderId;
+    private LocalDateTime orderArrivalTime;
+    private boolean hasPaid;
+    private boolean stockConfirmed;
+    private String emailClient;
 }
