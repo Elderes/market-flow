@@ -53,11 +53,11 @@ public class PaymentService {
                 .orElseThrow(() -> new PaymentNotFoundException("Payment not found"));
     
         payment.setStockConfirmed(true);
-        payment.setHasPaid(true);
+        payment.setHasPaid(false);
     
         paymentRepository.save(payment); // Persist updated state
         sendEmail(payment);
-        logger.info("Payment approved.");
+
     }
 
     public BigDecimal calculateTotal(List<ProductDTO> products) {
@@ -75,8 +75,7 @@ public class PaymentService {
 
     public void pay(PayDTO payDTO) {
         var payment = findPaymentById(payDTO.code());
-
-        if (payment.getTotalPrice().compareTo(payDTO.value()) < 0) {
+        if (payment.getTotalPrice().compareTo(payDTO.value()) == 1) {
             throw new InvalidValueException("Payment amount less than total order amount!");
         }
 
@@ -86,7 +85,7 @@ public class PaymentService {
         paymentRepository.save(payment);
 
         var paymentDTO = new PaymentDTO(payment.getTotalPrice(), payment.getDateTimeOfPayment(), payment.getOrderId(), payment.isHasPaid());
-
+        logger.info("Payment approved.");
         paymentProducer.publishPayment(paymentDTO);
     }
 
