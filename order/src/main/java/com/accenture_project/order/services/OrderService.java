@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
@@ -54,32 +56,32 @@ public class OrderService {
         productService.validateProducts(productDTO);
     }
 
-//    public void sendEmail(OrderModel order) {
-//        try {
-//            logger.info("Sending email to {}", order.getClient().getEmail());
-//
-//            var message = new SimpleMailMessage();
-//            message.setTo(order.getClient().getEmail());
-//            message.setFrom(emailFrom);
-//            message.setSubject("Pedido em andamento");
-//            message.setText("Olá " + order.getClient().getName() + ",\n\n" +
-//                    "Seu pedido está sendo processado, aguarde email de confirmação de estoque, e email para pagamento!" +
-//                    "Detalhes do pedido:\n");
-//
-//            for (ProductModel product : order.getProducts()) {
-//                message.setText(message.getText() +
-//                        "Produto: " + product.getName() + "\n" +
-//                        "Quantidade: " + product.getQuantity() + "\n\n");
-//            }
-//
-//            message.setText(message.getText() +
-//                    "Obrigado por comprar conosco! Estamos preparando o pedido.");
-//
-//            mailSender.send(message);
-//        } catch (MailException e) {
-//            logger.error("Error sending email to customer: {}", e.getMessage());
-//        }
-//    }
+    public void sendEmail(OrderModel order, List<ProductDTO> productsDTO) {
+        try {
+            logger.info("Sending email to {}", order.getClient().getEmail());
+
+            var message = new SimpleMailMessage();
+            message.setTo(order.getClient().getEmail());
+            message.setFrom(emailFrom);
+            message.setSubject("Pedido em andamento");
+            message.setText("Olá " + order.getClient().getName() + ",\n\n" +
+                    "Seu pedido está sendo processado, aguarde email de confirmação de estoque, e email para pagamento!" +
+                    "Detalhes do pedido:\n");
+
+            for (ProductDTO product : productsDTO) {
+                message.setText(message.getText() +
+                        "Produto: " + product.name() + "\n" +
+                        "Quantidade: " + product.quantity() + "\n\n");
+            }
+
+            message.setText(message.getText() +
+                    "Obrigado por comprar conosco! Estamos preparando o pedido.");
+
+            mailSender.send(message);
+        } catch (MailException e) {
+            logger.error("Error sending email to customer: {}", e.getMessage());
+        }
+    }
 
     public List<OrderModel> getOrders() {
         var orders = orderRepository.findAll();
