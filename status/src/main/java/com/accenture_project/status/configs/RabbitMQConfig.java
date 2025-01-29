@@ -47,7 +47,7 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Binding bindingQueueSendStatusDirect(@Qualifier("queueSendStatus") Queue queue, DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(routingKeySendStatus);
+    public Binding bindingQueueSendStatusDirect(DirectExchange exchange) {
+        return BindingBuilder.bind(queueSendStatus()).to(exchange).with(routingKeySendStatus);
     }
 }

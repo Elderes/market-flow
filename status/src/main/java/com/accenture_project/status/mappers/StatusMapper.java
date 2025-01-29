@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class StatusMapper {
     public StatusDTO toStatusModel(StatusModel statusModel) {
-        return new StatusDTO(statusModel.getEmailClient(), statusModel.getNameClient());
+        return new StatusDTO(statusModel.getEmailClient(), statusModel.getOrderId());
     }
 }

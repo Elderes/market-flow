@@ -31,7 +31,6 @@ public class StatusService {
         status.setWasPaid(false);
         status.setLastUpdate(LocalDateTime.now());
         status.setEmailClient(order.client().email());
-        status.setNameClient(order.client().name());
 
         statusRepository.save(status);
     }

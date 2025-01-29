@@ -32,8 +32,5 @@ public class StatusModel implements Serializable {
     @Column(nullable = false)
     private String emailClient;
 
-    @Column(nullable = false)
-    private String nameClient;
-
     private BigDecimal totalPrice;
 }

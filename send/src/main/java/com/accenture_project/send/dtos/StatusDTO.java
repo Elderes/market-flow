@@ -1,4 +1,4 @@
-package com.accenture_project.status.dtos;
+package com.accenture_project.send.dtos;
 
 import java.util.UUID;
 

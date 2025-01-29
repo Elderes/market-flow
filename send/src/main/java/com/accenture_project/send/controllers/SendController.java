@@ -1,13 +1,7 @@
 package com.accenture_project.send.controllers;
 
-import com.accenture_project.send.exceptions.NoAddressException;
-import com.accenture_project.send.exceptions.NoClientException;
-import com.accenture_project.send.exceptions.NoOrderException;
-import com.accenture_project.send.exceptions.NoProductException;
-import com.accenture_project.send.models.AddressModel;
-import com.accenture_project.send.models.ClientModel;
-import com.accenture_project.send.models.OrderModel;
-import com.accenture_project.send.models.ProductModel;
+import com.accenture_project.send.exceptions.*;
+import com.accenture_project.send.models.SendModel;
 import com.accenture_project.send.services.*;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -28,162 +22,56 @@ public class SendController {
 
     private static final Logger logger = LoggerFactory.getLogger(SendController.class);
 
-    private final AddressService addressService;
-    private final ClientService clientService;
-    private final OrderService orderService;
-    private final ProductService productService;
     private final SendService sendService;
 
-    @PostMapping("/send_email/{id}")
-    public ResponseEntity<String> sendEmail(@PathVariable("id") UUID id) {
+//    @PostMapping("/send/{id}")
+//    public ResponseEntity<String> sendEmail(@PathVariable("id") UUID id) {
+//        try {
+//            var order = orderService.getOrder(id);
+//
+//            sendService.sendEmail(order);
+//
+//            return ResponseEntity.ok().body("Email sent");
+//        } catch (NoOrderException e) {
+//            logger.error(e.getMessage());
+//
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found");
+//        } catch (Exception e) {
+//            logger.error("Error while sending email", e);
+//
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while sending email");
+//        }
+//    }
+
+    @GetMapping("/sends")
+    public ResponseEntity<List<SendModel>> getSends() {
         try {
-            var order = orderService.getOrder(id);
+            var sends = sendService.getAllSends();
 
-            sendService.sendEmail(order);
-
-            return ResponseEntity.ok().body("Email sent");
-        } catch (NoOrderException e) {
-            logger.error(e.getMessage());
-
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found");
-        } catch (Exception e) {
-            logger.error("Error while sending email", e);
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while sending email");
-        }
-    }
-
-    @GetMapping("/addresses")
-    public ResponseEntity<List<AddressModel>> getAddresses() {
-        try {
-            var addresses = addressService.getAllAddresses();
-
-            return ResponseEntity.ok().body(addresses);
-        } catch (NoAddressException e) {
+            return ResponseEntity.ok().body(sends);
+        } catch (SendNotFoundException e) {
             logger.error(e.getMessage());
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch (Exception e) {
-            logger.error("Error retrieving addresses", e);
+            logger.error("Error retrieving sends", e);
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    @GetMapping("/address/{id}")
-    public ResponseEntity<AddressModel> getAddressById(@PathVariable("id") UUID id) {
+    @GetMapping("/send/{id}")
+    public ResponseEntity<SendModel> getSendById(@PathVariable("id") UUID id) {
         try {
-            var address = addressService.getAddress(id);
+            var send = sendService.findById(id);
 
-            return ResponseEntity.ok().body(address);
-        } catch (NoAddressException e) {
+            return ResponseEntity.ok().body(send);
+        } catch (SendNotFoundException e) {
             logger.error(e.getMessage());
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch (Exception e) {
-            logger.error("Error retrieving address", e);
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    @GetMapping("/clients")
-    public ResponseEntity<List<ClientModel>> getClients() {
-        try {
-            var clients = clientService.getAllClients();
-
-            return ResponseEntity.ok().body(clients);
-        } catch (NoClientException e) {
-            logger.error(e.getMessage());
-
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } catch (Exception e) {
-            logger.error("Error retrieving clients", e);
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    @GetMapping("/client/{id}")
-    public ResponseEntity<ClientModel> getClientById(@PathVariable("id") UUID id) {
-        try {
-            var client = clientService.getClient(id);
-
-            return ResponseEntity.ok().body(client);
-        } catch (NoClientException e) {
-            logger.error(e.getMessage());
-
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } catch (Exception e) {
-            logger.error("Error retrieving client", e);
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    @GetMapping("/orders")
-    public ResponseEntity<List<OrderModel>> getOrders() {
-        try {
-            var orders = orderService.getOrders();
-
-            return ResponseEntity.ok().body(orders);
-        } catch (NoOrderException e) {
-            logger.error(e.getMessage());
-
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } catch (Exception e) {
-            logger.error("Error retrieving orders", e);
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    @GetMapping("/order/{id}")
-    public ResponseEntity<OrderModel> getOrderById(@PathVariable("id") UUID id) {
-        try {
-            var order = orderService.getOrder(id);
-
-            return ResponseEntity.ok().body(order);
-        } catch (NoOrderException e) {
-            logger.error(e.getMessage());
-
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        } catch (Exception e) {
-            logger.error("Error retrieving order", e);
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    @GetMapping("/products")
-    public ResponseEntity<List<ProductModel>> getAllProducts() {
-        try {
-            var products = productService.getAllProducts();
-
-            return ResponseEntity.ok().body(products);
-        } catch (NoProductException e) {
-            logger.error(e.getMessage());
-
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } catch (Exception e) {
-            logger.error("Error retrieving products", e);
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    @GetMapping("/product/{id}")
-    public ResponseEntity<ProductModel> getProductById(@PathVariable("id") UUID id) {
-        try {
-            var product = productService.getProduct(id);
-
-            return ResponseEntity.ok().body(product);
-        } catch (NoProductException e) {
-            logger.error(e.getMessage());
-
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } catch (Exception e) {
-            logger.error("Error retrieving product", e);
+            logger.error("Error retrieving send", e);
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
