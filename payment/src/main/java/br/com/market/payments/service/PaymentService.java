@@ -64,8 +64,8 @@ public class PaymentService {
                 .orElseThrow(() -> new PaymentNotFoundException("Payment not found"));
     
         payment.setStockConfirmed(true);
-        payment.setHasPaid(true);
-    
+        payment.setHasPaid(false);
+
         paymentRepository.save(payment);
         sendEmail(payment);
     }
