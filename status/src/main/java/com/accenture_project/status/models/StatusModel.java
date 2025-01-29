@@ -5,10 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Getter @Setter
+@Getter
+@Setter
 @Entity
 @Table(name = "tb_status")
 public class StatusModel implements Serializable {
@@ -26,4 +28,12 @@ public class StatusModel implements Serializable {
 
     @Column(nullable = false)
     private LocalDateTime lastUpdate;
+
+    @Column(nullable = false)
+    private String emailClient;
+
+    @Column(nullable = false)
+    private String nameClient;
+
+    private BigDecimal totalPrice;
 }

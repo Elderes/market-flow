@@ -1,14 +1,11 @@
 package com.accenture_project.status.services;
 
-import com.accenture_project.status.dtos.StatusDTO;
-import com.accenture_project.status.exceptions.NoOrderException;
+import com.accenture_project.status.dtos.OrderDTO;
+import com.accenture_project.status.dtos.PaymentDTO;
 import com.accenture_project.status.exceptions.NoStatusException;
 import com.accenture_project.status.mappers.StatusMapper;
-import com.accenture_project.status.models.OrderModel;
-import com.accenture_project.status.models.PaymentModel;
 import com.accenture_project.status.models.StatusModel;
 import com.accenture_project.status.producers.StatusProducer;
-import com.accenture_project.status.repositories.OrderRepository;
 import com.accenture_project.status.repositories.StatusRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,42 +18,37 @@ import java.util.UUID;
 @Service
 public class StatusService {
 
-    private final OrderRepository orderRepository;
     private final StatusRepository statusRepository;
 
     private final StatusProducer statusProducer;
 
     private final StatusMapper statusMapper;
 
-    public void saveOrder(OrderModel order) {
-        orderRepository.save(order);
-
+    public void saveOrderStatus(OrderDTO order) {
         var status = new StatusModel();
 
-        status.setOrderId(order.getId());
+        status.setOrderId(order.id());
         status.setWasPaid(false);
         status.setLastUpdate(LocalDateTime.now());
+        status.setEmailClient(order.client().email());
+        status.setNameClient(order.client().name());
 
         statusRepository.save(status);
     }
 
-    public void updateOrder(OrderModel order) {
-        orderRepository.save(order);
-    }
+    public void paymentOrder(PaymentDTO payment) {
 
-    public void paymentOrder(PaymentModel payment) {
-        var order = orderRepository.findById(payment.getOrderId()).orElseThrow(() -> new NoOrderException("Order not found"));
-        order.setTotalPrice(payment.getTotalValue());
+        var status = statusRepository.findById(payment.orderId()).orElseThrow(() -> new NoStatusException("Order not found"));
 
-        var status = statusRepository.findByOrderId(payment.getOrderId());
-        updateOrder(order);
-
-        status.setWasPaid(true);
+        status.setWasPaid(payment.hasPaid());
         status.setLastUpdate(LocalDateTime.now());
+        status.setTotalPrice(payment.totalPrice());
 
         statusRepository.save(status);
 
-        statusProducer.publishOrder(order);
+        var statusDTO = statusMapper.toStatusModel(status);
+
+        statusProducer.publishOrder(statusDTO);
     }
 
     public List<StatusModel> getAllStatus() {
@@ -79,13 +71,5 @@ public class StatusService {
             throw new NoStatusException("Status not found with id:" + id);
         }
         statusRepository.deleteById(id);
-    }
-
-    public void updateStatus(UUID id, StatusDTO statusDTO) {
-        var status = getStatus(id);
-
-        status = statusMapper.toStatusModel(status, statusDTO);
-
-        statusRepository.save(status);
     }
 }

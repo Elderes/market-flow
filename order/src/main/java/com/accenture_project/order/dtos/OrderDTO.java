@@ -4,6 +4,5 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record OrderDTO(ClientDTO client,
-                       List<ProductDTO> products,
-                       LocalDateTime orderDateTime) {
+                       List<ProductDTO> products) {
 }

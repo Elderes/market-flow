@@ -16,9 +16,9 @@ public class OpenAPIConfig {
         contact.setEmail("lucazmatehus14@gmail.com");
 
         return new OpenAPI().info(new Info()
-                        .title("Pedido API")
-                        .version("1.0")
-                        .description("")
-                        .contact(contact));
+                .title("Pedido API")
+                .version("1.0")
+                .description("")
+                .contact(contact));
     }
 }

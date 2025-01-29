@@ -1,6 +1,5 @@
 package com.accenture_project.status.controllers;
 
-import com.accenture_project.status.dtos.StatusDTO;
 import com.accenture_project.status.exceptions.NoStatusException;
 import com.accenture_project.status.models.StatusModel;
 import com.accenture_project.status.services.StatusService;
@@ -9,7 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.UUID;
@@ -70,25 +72,6 @@ public class StatusController {
             logger.error("Error deleting order", e);
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting order");
-        }
-    }
-
-    @PutMapping("/status/{id}")
-    public ResponseEntity<String> updateStatus(@PathVariable("id") UUID id, @RequestBody StatusDTO statusDTO) {
-        try {
-            statusService.updateStatus(id, statusDTO);
-
-            logger.info("Status successfully updated");
-
-            return ResponseEntity.status(HttpStatus.OK).body("Status updated successfully!");
-        } catch (NoStatusException e) {
-            logger.error("Error updating status", e);
-
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        } catch (Exception e) {
-            logger.error("Error updating status ", e);
-
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Unexpected error: " + e.getMessage());
         }
     }
 }

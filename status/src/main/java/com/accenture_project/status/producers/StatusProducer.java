@@ -1,6 +1,6 @@
 package com.accenture_project.status.producers;
 
-import com.accenture_project.status.models.OrderModel;
+import com.accenture_project.status.dtos.StatusDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +17,7 @@ public class StatusProducer {
     @Value("${routing.key.send.status}")
     private String routingKey;
 
-    public void publishOrder(OrderModel order) {
-        rabbitTemplate.convertAndSend(exchange, routingKey, order);
+    public void publishOrder(StatusDTO statusDTO) {
+        rabbitTemplate.convertAndSend(exchange, routingKey, statusDTO);
     }
 }

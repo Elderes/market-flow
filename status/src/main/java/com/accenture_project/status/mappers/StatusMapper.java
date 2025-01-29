@@ -6,10 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class StatusMapper {
-    public StatusModel toStatusModel(StatusModel statusModel, StatusDTO statusDTO) {
-        statusModel.setWasPaid(statusDTO.wasPaid());
-        statusModel.setLastUpdate(statusDTO.lastUpdate());
-
-        return statusModel;
+    public StatusDTO toStatusModel(StatusModel statusModel) {
+        return new StatusDTO(statusModel.getEmailClient(), statusModel.getNameClient());
     }
 }

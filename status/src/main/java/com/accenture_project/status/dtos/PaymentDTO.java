@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record PaymentDTO(UUID id,
-                         BigDecimal totalPrice,
+public record PaymentDTO(BigDecimal totalPrice,
                          LocalDateTime dateTimeOfPayment,
-                         UUID orderId) {
+                         UUID orderId,
+                         boolean hasPaid) {
 
 }
