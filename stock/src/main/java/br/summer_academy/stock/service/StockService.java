@@ -164,4 +164,11 @@ public class StockService {
         }
     }
 
+    public void printBadProductList() {
+        System.out.println("Bad product List:");
+        for (BadProduct badProduct : listOfBadProducts) {
+            System.out.println("- " + badProduct);
+        }
+    }
+
 }
