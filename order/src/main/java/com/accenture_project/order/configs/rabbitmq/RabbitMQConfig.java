@@ -9,6 +9,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * This class configures RabbitMQ messaging components, including queues,
+ * a fanout exchange, and their respective bindings. It ensures that messages
+ * are properly routed to the relevant queues using the fanout exchange pattern.
+ */
+
 @Configuration
 public class RabbitMQConfig {
 

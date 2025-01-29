@@ -46,12 +46,51 @@ These services communicate asynchronously using RabbitMQ, ensuring decoupling an
 ## Microservices
 
 ### Order Service
-- **Responsibilities**: 
+- **Responsibilities**:
   - Receives customer orders.
-  - Validates order details.
-  - Publishes order events to RabbitMQ.
+  - Validates order details (e.g., client information, products, etc.).
+  - Publishes order events to RabbitMQ for processing by other services.
+  - Sends confirmation emails to customers regarding their order status.
+  - Manages client and address information related to orders.
+
 - **Endpoints**:
-  - `POST /order`: Place a new order.
+  - `POST /order`: Creates a new order in the system.
+    - Response:
+      - 201 Created: Order placed successfully.
+      - 400 Bad Request: Invalid input or missing required fields.
+  - `GET /order/{id}`: Retrieves an order by its ID.
+    - Response:
+      - 200 OK: Returns the order details.
+      - 404 Not Found: Order not found.
+  - `GET /orders`: Retrieves a list of all orders.
+    - Response:
+      - 200 OK: Returns a list of all orders.
+      - 404 Not Found: No orders found.
+  - `DELETE /order/{id}`: Deletes an order by its ID.
+    - Response:
+      - 200 OK: Order deleted successfully.
+      - 404 Not Found: Order not found.
+  - `GET /client/{id}`: Retrieves a client by its ID.
+    - Response:
+      - 200 OK: Returns the client details.
+      - 404 Not Found: Client not found.
+  - `GET /clients`: Retrieves a list of all clients.
+    - Response:
+      - 200 OK: Returns a list of all clients.
+      - 404 Not Found: No clients found.
+  - `GET /address/{id}`: Retrieves an address by its ID.
+    - Response:
+      - 200 OK: Returns the address details.
+      - 404 Not Found: Address not found.
+  - `GET /addresses`: Retrieves a list of all addresses.
+    - Response:
+      - 200 OK: Returns a list of all addresses.
+      - 404 Not Found: No addresses found.
+- **Running the Service**
+  - Database: Ensure a database(MySQL) is connected for storing orders.
+  - Java: Make sure you have JDK 21 or above installed.
+- **To start application**
+  - http://localhost:8080/swagger-ui/index.html#
 
 ### Stock Service
 - **Responsibilities**:
@@ -89,7 +128,7 @@ These services communicate asynchronously using RabbitMQ, ensuring decoupling an
 
   - `GET /products`: List all products.
   - `GET /product/{id}`: Return product by id.
- 
+
   - `GET /orders`: List all orders. **(Conflict!)**
 
 ### Status Service

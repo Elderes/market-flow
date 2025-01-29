@@ -6,6 +6,15 @@ import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/*
+ * OpenAPIConfig Class
+ *
+ * This class configures Swagger documentation for the "Pedido API" microservice.
+ * It defines API metadata such as title, version, description, and contact information.
+ * The customOpenAPI() method creates a bean that integrates this configuration into the Spring Boot application.
+ *
+ */
+
 @Configuration
 public class OpenAPIConfig {
 

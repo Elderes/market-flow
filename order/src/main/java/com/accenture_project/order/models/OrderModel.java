@@ -8,6 +8,15 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/*
+ * ClientModel Class
+ *
+ * This class represents a client in the system, mapped to the "tb_client" table.
+ * It includes fields for the client's name, cellphone, email, and an associated address.
+ * The address is mapped to the AddressModel entity with a one-to-one relationship.
+ * The class is annotated as a JPA entity, with a UUID as the primary key.
+ */
+
 @Getter
 @Setter
 @Entity

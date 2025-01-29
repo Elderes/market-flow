@@ -8,6 +8,14 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/*
+ * OrderProducerMapper Class
+ *
+ * This class provides a method to map an OrderModel to an OrderProducerDTO.
+ * - toOrderProducerDTO: Converts an OrderModel and a list of ProductDTOs to an OrderProducerDTO.
+ */
+
+
 @RequiredArgsConstructor
 @Component
 public class OrderProducerMapper {

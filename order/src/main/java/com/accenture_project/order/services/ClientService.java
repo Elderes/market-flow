@@ -12,6 +12,24 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+/*
+ * ClientService Class
+ *
+ * This class provides services related to client operations, including client validation,
+ * retrieving all clients, fetching a client by ID, and updating a client.
+ * It interacts with the ClientRepository to access the database and uses the
+ * ClientUpdateMapper to update client data.
+ *
+ * Key methods:
+ * - validateClient(ClientModel client): Validates client fields like name, cellphone, email,
+ *   and address.
+ * - getAllClients(): Retrieves all clients and throws an exception if no clients are found.
+ * - getClient(UUID id): Retrieves a client by their ID and throws an exception if not found.
+ * - updateClient(UUID id, ClientDTO clientDTO): Updates an existing client with data from
+ *   the provided ClientDTO.
+ */
+
+
 @RequiredArgsConstructor
 @Service
 public class ClientService {

@@ -5,6 +5,13 @@ import com.accenture_project.order.models.OrderModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+/*
+ * OrderUpdateMapper Class
+ *
+ * This class provides a method to update an OrderModel using data from an OrderDTO.
+ * - toOrderModel: Updates an OrderModel with data from an OrderDTO, including updating the client information.
+ */
+
 @RequiredArgsConstructor
 @Component
 public class OrderUpdateMapper {

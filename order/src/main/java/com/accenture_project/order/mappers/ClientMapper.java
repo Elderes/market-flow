@@ -5,6 +5,16 @@ import com.accenture_project.order.models.ClientModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+/*
+ * ClientMapper Class
+ *
+ * This class provides methods to map between ClientDTO and ClientModel.
+ * It includes:
+ * - toClientModel: Converts a ClientDTO to a ClientModel.
+ * - toClientDTO: Converts a ClientModel to a ClientDTO.
+ */
+
+
 @RequiredArgsConstructor
 @Component
 public class ClientMapper {

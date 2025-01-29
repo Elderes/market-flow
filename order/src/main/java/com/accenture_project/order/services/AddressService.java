@@ -12,6 +12,21 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+/*
+ * AddressService Class
+ *
+ * This class provides services related to address operations. It validates addresses,
+ * retrieves all addresses, fetches an address by ID, and updates an address.
+ * It uses the AddressRepository to interact with the database and AddressUpdateMapper
+ * to update address information.
+ *
+ * Key methods:
+ * - validateAddress(AddressModel address): Validates the fields of an address.
+ * - getAllAddresses(): Retrieves all addresses and throws an exception if none are found.
+ * - getAddress(UUID id): Fetches an address by its ID and throws an exception if not found.
+ * - updateAddress(UUID id, AddressDTO addressDTO): Updates an existing address using data from the provided AddressDTO.
+ */
+
 @RequiredArgsConstructor
 @Service
 public class AddressService {

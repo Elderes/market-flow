@@ -4,6 +4,15 @@ import com.accenture_project.order.dtos.AddressDTO;
 import com.accenture_project.order.models.AddressModel;
 import org.springframework.stereotype.Component;
 
+/*
+ * AddressMapper Class
+ *
+ * This class provides methods to map between AddressDTO and AddressModel.
+ * It includes:
+ * - toAddressModel: Converts an AddressDTO to an AddressModel.
+ * - toAddressDTO: Converts an AddressModel to an AddressDTO.
+ */
+
 @Component
 public class AddressMapper {
     public AddressModel toAddressModel(AddressDTO addressDTO) {

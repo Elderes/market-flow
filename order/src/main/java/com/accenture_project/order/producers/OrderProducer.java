@@ -6,6 +6,15 @@ import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
+/*
+ * OrderProducer Class
+ *
+ * This class is responsible for publishing orders to a RabbitMQ fanout exchange.
+ * It uses RabbitTemplate to send messages of type OrderProducerDTO to the exchange.
+ * The FanoutExchange ensures that the message is sent to all queues bound to it.
+ * The class is annotated as a Spring component and utilizes constructor injection.
+ */
+
 @RequiredArgsConstructor
 @Component
 public class OrderProducer {

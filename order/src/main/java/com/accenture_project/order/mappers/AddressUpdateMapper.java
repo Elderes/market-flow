@@ -7,6 +7,15 @@ import com.accenture_project.order.models.AddressModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+/*
+ * AddressUpdateMapper Class
+ *
+ * This class provides methods to update an AddressModel using data from different DTOs:
+ * - toAddressModel (AddressDTO): Updates an AddressModel with data from AddressDTO.
+ * - toAddressModel (ClientDTO): Updates an AddressModel with data from ClientDTO.
+ * - toAddressModel (OrderDTO): Updates an AddressModel with data from OrderDTO.
+ */
+
 @RequiredArgsConstructor
 @Component
 public class AddressUpdateMapper {

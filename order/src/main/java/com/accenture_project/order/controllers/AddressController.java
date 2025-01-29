@@ -16,15 +16,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * This controller provides endpoints for retrieving clients.
+/*
+ * This class handles HTTP requests related to addresses.
+ * It provides the following endpoints:
  *
- * - GET /clients: Fetches a list of all clients.
- * - GET /client/{id}: Fetches a specific client by their ID.
- *
- * Exceptions:
- * - Handles NoClientException by logging and returning a 500 Internal Server Error.
- * - Handles general exceptions by logging and returning a 500 Internal Server Error.
+ * - GET /addresses: Retrieves a list of all addresses.
+ * - GET /address/{id}: Retrieves a specific address by its ID.
+ * - PUT /address/{id}: Updates an existing address based on the provided ID and address data.
  */
 
 @RequiredArgsConstructor

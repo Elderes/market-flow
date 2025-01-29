@@ -6,6 +6,14 @@ import com.accenture_project.order.models.ClientModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+/*
+ * ClientUpdateMapper Class
+ *
+ * This class provides methods to update a ClientModel using data from different DTOs:
+ * - toClientModel (ClientDTO): Updates a ClientModel with data from ClientDTO.
+ * - toClientModel (OrderDTO): Updates a ClientModel with data from OrderDTO.
+ */
+
 @RequiredArgsConstructor
 @Component
 public class ClientUpdateMapper {

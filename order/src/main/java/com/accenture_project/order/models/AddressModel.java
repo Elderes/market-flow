@@ -7,6 +7,15 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.util.UUID;
 
+/*
+ * AddressModel Class
+ *
+ * This class represents an address in the system, mapped to the "tb_address" table.
+ * It includes fields for country, state, city, neighborhood, street, and number.
+ * The class is annotated as a JPA entity, with a UUID as the primary key.
+ */
+
+
 @Getter @Setter
 @Entity
 @Table(name = "tb_address")

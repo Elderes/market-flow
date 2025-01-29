@@ -8,6 +8,20 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 
+/*
+ * ProductService Class
+ *
+ * This class provides services for product validation. It checks the properties of
+ * each product in a list, ensuring that the product name is not empty, the quantity
+ * is greater than 0, and the unit price is not negative.
+ *
+ * Key method:
+ * - validateProducts(List<ProductDTO> products): Validates a list of products by checking
+ *   the product name, quantity, and unit price. Throws an InvalidProductException if any
+ *   of the conditions are not met.
+ */
+
+
 @RequiredArgsConstructor
 @Service
 public class ProductService {

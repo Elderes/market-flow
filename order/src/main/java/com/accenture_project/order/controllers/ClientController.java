@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * This controller provides endpoints for retrieving clients.
+/*
+ * ClientController Class
  *
- * - GET /clients: Fetches a list of all clients.
- * - GET /client/{id}: Fetches a specific client by their ID.
+ * This class handles HTTP requests related to clients.
+ * It provides the following endpoints:
  *
- * Exceptions:
- * - Handles NoClientException by logging and returning a 500 Internal Server Error.
- * - Handles general exceptions by logging and returning a 500 Internal Server Error.
+ * - GET /clients: Retrieves a list of all clients.
+ * - GET /client/{id}: Retrieves a specific client by its ID.
+ * - PUT /client/{id}: Updates an existing client based on the provided ID and client data.
  */
 
 @RequiredArgsConstructor

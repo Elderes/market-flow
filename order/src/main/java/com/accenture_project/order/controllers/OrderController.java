@@ -18,6 +18,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+/*
+ * OrderController Class
+ *
+ * This class handles HTTP requests related to orders.
+ * It provides the following endpoints:
+ *
+ * - POST /order: Creates a new order, validates it, sends it to a queue in RabbitMQ for further processing,
+ *   and sends a confirmation email.
+ * - GET /orders: Retrieves a list of all orders.
+ * - GET /order/{id}: Retrieves a specific order by its ID.
+ * - DELETE /order/{id}: Deletes an order based on the provided ID.
+ * - PUT /order/{id}: Updates an existing order based on the provided ID and order data.
+ */
+
 @RequiredArgsConstructor
 @RestController
 public class OrderController {

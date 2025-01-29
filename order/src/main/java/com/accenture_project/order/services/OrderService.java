@@ -20,6 +20,29 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+/*
+ * OrderService Class
+ *
+ * This class provides services related to order operations, including order validation,
+ * saving, retrieving, updating, and deleting orders. It also handles order publishing
+ * to a messaging queue and sending email notifications to clients.
+ *
+ * Key methods:
+ * - saveOrder(OrderModel order): Saves the order to the database.
+ * - publishOrder(OrderModel order, List<ProductDTO> productsDTO): Publishes the order
+ *   to a RabbitMQ queue using the OrderProducer.
+ * - validateOrder(OrderModel order, List<ProductDTO> productDTO): Validates the client
+ *   and products associated with the order.
+ * - sendEmail(OrderModel order, List<ProductDTO> productsDTO): Sends an email to the
+ *   client with details about their order.
+ * - getOrders(): Retrieves all orders and throws an exception if no orders are found.
+ * - getOrder(UUID id): Retrieves an order by its ID and throws an exception if not found.
+ * - deleteById(UUID id): Deletes the order with the given ID.
+ * - updateOrder(UUID id, OrderDTO orderDTO): Updates the existing order with the provided
+ *   OrderDTO.
+ */
+
+
 @RequiredArgsConstructor
 @Service
 public class OrderService {

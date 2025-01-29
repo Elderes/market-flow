@@ -7,6 +7,14 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+/*
+ * OrderMapper Class
+ *
+ * This class provides a method to map an OrderDTO to an OrderModel.
+ * - toOrderModel: Converts an OrderDTO to an OrderModel, including setting the current order date/time.
+ */
+
+
 @RequiredArgsConstructor
 @Component
 public class OrderMapper {
