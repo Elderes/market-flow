@@ -37,7 +37,7 @@ public class StatusService {
 
     public void paymentOrder(PaymentDTO payment) {
 
-        var status = statusRepository.findById(payment.orderId()).orElseThrow(() -> new NoStatusException("Order not found"));
+        var status = statusRepository.findByOrderId(payment.orderId()).orElseThrow(() -> new NoStatusException("Order not found"));
 
         status.setWasPaid(payment.hasPaid());
         status.setLastUpdate(LocalDateTime.now());

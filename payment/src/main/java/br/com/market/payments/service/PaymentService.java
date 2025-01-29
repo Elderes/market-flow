@@ -105,11 +105,11 @@ public class PaymentService {
             var message = new SimpleMailMessage();
             message.setTo(paymentModel.getEmailClient());
             message.setFrom(emailFrom);
-            message.setSubject("Pedido esperando pagamento");
-            message.setText("Código de pagamento: " + paymentModel.getId() + " \nValor do pedido:" + paymentModel.getTotalPrice().setScale(2) + "R$.");
+            message.setSubject("Pedido aprovado");
+            message.setText("Seu pedido foi recebido pelo estoque e foi aprovado :D\nAgora o pedido está esperando o pagamento\nCódigo de pagamento: " + paymentModel.getId() + " \nValor do pedido:" + paymentModel.getTotalPrice().setScale(2) + "R$.");
 
             message.setText(message.getText() +
-                    "Obrigado por comprar conosco! Estamos preparando o pedido.");
+                    "Obrigado por comprar conosco! Estamos esperando o pagamento.");
 
             mailSender.send(message);
         } catch (MailException e) {
