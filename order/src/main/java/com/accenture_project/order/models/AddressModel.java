@@ -1,7 +1,9 @@
 package com.accenture_project.order.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -15,7 +17,8 @@ import java.util.UUID;
  * The class is annotated as a JPA entity, with a UUID as the primary key.
  */
 
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter @Setter
 @Entity
 @Table(name = "tb_address")
