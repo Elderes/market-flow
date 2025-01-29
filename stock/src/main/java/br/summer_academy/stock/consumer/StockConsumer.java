@@ -20,8 +20,9 @@ public class StockConsumer {
 
     @RabbitListener(queues = "${rabbitmq.queue.stock.order}")
     public void receiveOrder(OrderRecordDTO order) {
-        List<Product> products = service.mapProducts(order.products());
         Order orderStock = new Order();
+        
+        List<Product> products = service.mapProducts(order.products());
         Client client = new Client();
         Address address = new Address();
 
@@ -50,11 +51,13 @@ public class StockConsumer {
             System.out.println("Products available");
             service.approveOrderAndValue(order); // Foward to payment
             service.sendOrderToStatus(order); // Foward to status same order
+            service.sendGoodEmail(orderStock);
         }
         else
         {
             System.out.println("Products unavailable");
             service.disapproveOrderAndValue(order); // Foward to payment
+            service.sendBadEmail(orderStock);
         }
     }
 
