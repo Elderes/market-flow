@@ -1,7 +1,9 @@
 package com.accenture_project.status.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -14,6 +16,8 @@ import java.util.UUID;
  * It includes details such as order ID, payment status, last update time, client email, and total price.
  */
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
