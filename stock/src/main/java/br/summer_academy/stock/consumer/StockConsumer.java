@@ -43,8 +43,9 @@ public class StockConsumer {
         orderStock.setProducts(products);
         orderStock.setOrderDateTime(order.orderDateTime());
         
-        System.out.println("\nClient name: " + order.client().name());
+        System.out.println("\n\nClient name: " + order.client().name());
         System.out.println("Order id: " + order.id());
+        service.printBadProductList();
         service.printProductList(products);
 
         if (service.checkIfAvailable(products)) {
