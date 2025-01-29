@@ -16,11 +16,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Service class responsible for sending emails related to order completion.
+/*
+ * SendService Class
  *
- * - sendEmail: Sends an email to the customer with order details. Logs errors in case of failure.
+ * Handles the business logic related to sending order confirmation emails and saving the send status.
+ * Interacts with the SendRepository to persist send data and uses JavaMailSender to send emails to customers.
+ * Contains methods to save send status, retrieve send details, and send emails.
  */
+
 
 @RequiredArgsConstructor
 @Service

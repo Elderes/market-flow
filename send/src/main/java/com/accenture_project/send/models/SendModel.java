@@ -6,6 +6,14 @@ import lombok.Setter;
 
 import java.util.UUID;
 
+/*
+ * SendModel Class
+ *
+ * Represents the entity for the "Send" table in the database.
+ * Stores information related to the sending status, including the orderId, email, and a flag indicating if the order has been sent.
+ */
+
+
 @Getter
 @Setter
 @Entity

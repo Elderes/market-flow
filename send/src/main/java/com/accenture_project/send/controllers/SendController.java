@@ -16,6 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.UUID;
 
+/*
+ * SendController Class
+ *
+ * Handles HTTP requests related to the "Send" entity.
+ * Provides endpoints for retrieving all sends and finding a specific send by its ID.
+ * Returns appropriate HTTP responses for successful retrieval or error scenarios.
+ */
+
 @RequiredArgsConstructor
 @RestController
 public class SendController {
@@ -23,25 +31,6 @@ public class SendController {
     private static final Logger logger = LoggerFactory.getLogger(SendController.class);
 
     private final SendService sendService;
-
-//    @PostMapping("/send/{id}")
-//    public ResponseEntity<String> sendEmail(@PathVariable("id") UUID id) {
-//        try {
-//            var order = orderService.getOrder(id);
-//
-//            sendService.sendEmail(order);
-//
-//            return ResponseEntity.ok().body("Email sent");
-//        } catch (NoOrderException e) {
-//            logger.error(e.getMessage());
-//
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found");
-//        } catch (Exception e) {
-//            logger.error("Error while sending email", e);
-//
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while sending email");
-//        }
-//    }
 
     @GetMapping("/sends")
     public ResponseEntity<List<SendModel>> getSends() {

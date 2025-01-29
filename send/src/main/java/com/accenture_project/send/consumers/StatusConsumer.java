@@ -8,11 +8,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-/**
- * RabbitMQ message consumer responsible for processing orders and sending email notifications.
+/*
+ * StatusConsumer Class
  *
- * - consumerMessage: Receives a message with order details, saves it to the database, and sends a confirmation email.
- *                    If any error occurs during processing, it is logged.
+ * Listens for messages on the "send.status" RabbitMQ queue.
+ * Processes the received StatusDTO message and saves the status using SendService.
+ * Handles exceptions by logging errors.
  */
 
 @RequiredArgsConstructor

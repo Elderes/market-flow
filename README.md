@@ -113,23 +113,27 @@ These services communicate asynchronously using RabbitMQ, ensuring decoupling an
 
 ### Send Service
 - **Responsibilities**:
-  - Handles order dispatch and delivery notifications.
-  - Updates order status after dispatch.
+  - Receives order statuses from the Order Service..
+  - Saves send status in the database.
+  - Sends confirmation emails to customers when their order has been processed for shipment.
+  - Manages the email sending process and logs any errors related to email failures.
+
 - **Endpoints**:
-  - `GET /addresses`: List all addresses.
-  - `GET /addresses/{id}`: Return address by id.
-
-  - `GET /clients`: List all clients.
-  - `GET /client/{id}`: Return client by id.
-
-  - `GET /orders`: List all orders.
-  - `GET /order/{id}`: Return order by id.
-  - `DELETE /order/{id}`: Delete order by id.
-
-  - `GET /products`: List all products.
-  - `GET /product/{id}`: Return product by id.
-
-  - `GET /orders`: List all orders. **(Conflict!)**
+  - `GET /sends`: Retrieves a list of all send statuses.
+    - Response:
+      - 200 OK: Returns a list of all send statuses.
+      - 404 Not Found: No sends found.
+  - `GET /send/{id}`: Retrieves a send status by its ID
+    - Response:
+      - 200 OK: Returns the send status details.
+      - 404 Not Found: Send not found.
+- **Running the Service**
+  - Database: Ensure a database (MySQL) is connected for storing send data.
+  - Java: Make sure you have JDK 21 or above installed.
+  - RabbitMQ: Ensure RabbitMQ is configured for message consumption.
+  - Email Service: Ensure email settings are correctly configured for sending confirmation emails.
+- **To start application**
+  - http://localhost:8084/swagger-ui/index.html#
 
 ### Status Service
 - **Responsibilities**:
