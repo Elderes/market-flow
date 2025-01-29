@@ -52,7 +52,7 @@ public class StockConsumer {
             System.out.println("Products available");
             service.approveOrderAndValue(order); // Foward to payment
             service.sendOrderToStatus(order); // Foward to status same order
-            service.sendGoodEmail(orderStock);
+            // service.sendGoodEmail(orderStock);
         }
         else
         {
