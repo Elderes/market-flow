@@ -103,14 +103,34 @@ These services communicate asynchronously using RabbitMQ, ensuring decoupling an
 
 ### Payment Service
 - **Responsibilities**:
-  - Processes payments for orders.
-  - Validates payment information.
-  - Publishes payment events to RabbitMQ.
+  - Receives payment information for orders from external services.
+  - Processes payments and updates the payment status in the database.
+  - Sends email notifications to customers for payment approval or rejection.
+  - Publishes payment updates to a message queue for further processing by other services.
 - **Endpoints**:
-  - `POST /payments`: Process a payment.
-  - `GET /payments`: List all payments.
-  - `GET /payments/{id}`: Retrieve payment entity.
-  - `PUT /payments/{id}`: Update payment entity.
+  - `POST /pay`: Payment code and value to be processed.
+    - Response:
+      - 200 OK: Payment successfully processed.
+      - 400 Bad Request: Invalid payment details (incorrect value or order).
+  - `GET /payments`: Retrieves a list of all payments in the system.
+    - Response:
+      - 200 OK: Returns a list of all payments.
+      - 400 Bad Request: Error retrieving payment list.
+  - `GET /payment/{id}`: Retrieves payment details by its ID.
+    - Response:
+      - 200 OK: Returns the payment details.
+      - 400 Bad Request: Payment not found for the given ID.
+  - `DELETE /payment/{id}`: Deletes a payment record by its ID.
+    - Response:
+      - 200 OK: Payment successfully deleted.
+      - 400 Bad Request: Payment not found for the given ID.
+- **Running the Service**
+  - Database: Ensure a database (MySQL) is connected for storing payment data.
+  -  Java: Ensure you have JDK 21 or above installed.
+  -  RabbitMQ: Ensure RabbitMQ is configured for message consumption.
+  -  Email Service: Ensure email settings are correctly configured for sending payment notifications.
+- **To start application**
+  - http://localhost:8082/swagger-ui/index.html#
 
 ### Send Service
 - **Responsibilities**:

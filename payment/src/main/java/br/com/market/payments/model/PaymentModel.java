@@ -8,6 +8,13 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/*
+ * Represents a payment model for an order.
+ * - Contains fields for payment ID, total price, payment date and time, associated order ID, arrival time, payment status, stock confirmation, and client's email.
+ * - Used to track and store payment information for orders in the system.
+ */
+
+
 @Getter
 @Setter
 @Entity

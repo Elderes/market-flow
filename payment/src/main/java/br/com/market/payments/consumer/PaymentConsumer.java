@@ -9,6 +9,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
+/*
+ * Listens for messages from RabbitMQ queues and processes them for payment and stock order updates.
+ * - Listens to the queue for order information and saves the payment order.
+ * - Listens to the queue for stock approval and processes the stock confirmation.
+ * - Handles exceptions and logs errors during message processing.
+ */
+
 @RequiredArgsConstructor
 @Component
 public class PaymentConsumer {
@@ -26,7 +33,6 @@ public class PaymentConsumer {
         }
     }
 
-
     @RabbitListener(queues = "${queue.payment.stock}")
     public void listenStock(StockOrderDTO stockOrderDTO) {
         System.out.println("Received from stock: " + stockOrderDTO.approval());
@@ -39,6 +45,4 @@ public class PaymentConsumer {
             logger.error(e.getMessage());
         }
     }
-
-
 }

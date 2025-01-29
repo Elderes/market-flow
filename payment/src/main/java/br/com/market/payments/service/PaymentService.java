@@ -20,6 +20,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+/*
+ * Service layer responsible for managing payment operations, including:
+ * - Saving payment orders to the database.
+ * - Confirming stock and updating payment status.
+ * - Calculating the total price of an order.
+ * - Handling payment transactions and ensuring correctness of payment amounts.
+ * - Sending email notifications regarding payment statuses (approved or rejected).
+ * - Publishing payment status to a message queue after a successful payment.
+ */
+
+
 @RequiredArgsConstructor
 @Service
 public class PaymentService {
@@ -40,9 +51,9 @@ public class PaymentService {
     
         payment.setOrderId(order.id());
         payment.setDateTimeOfPayment(LocalDateTime.now());
-        payment.setHasPaid(false); // Explicitly set the initial value
+        payment.setHasPaid(false);
         payment.setTotalPrice(calculateTotal(order.products()));
-        payment.setStockConfirmed(false); // Explicitly set the initial value
+        payment.setStockConfirmed(false);
         payment.setEmailClient(order.client().email());
     
         paymentRepository.save(payment);
@@ -55,7 +66,7 @@ public class PaymentService {
         payment.setStockConfirmed(true);
         payment.setHasPaid(true);
     
-        paymentRepository.save(payment); // Persist updated state
+        paymentRepository.save(payment);
         sendEmail(payment);
     }
 

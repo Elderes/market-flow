@@ -14,6 +14,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+/*
+ * Manages payment-related operations via RESTful endpoints.
+ * - Handles the payment process, including creating and deleting payments, and retrieving payment information.
+ * - Provides endpoints to:
+ *   - `POST /pay`: Process payment for an order.
+ *   - `GET /payments`: Retrieve a list of all payments.
+ *   - `GET /payment/{id}`: Retrieve payment details by ID.
+ *   - `DELETE /payment/{id}`: Delete a payment by its ID.
+ * - Catches specific exceptions like `PaymentNotFoundException` and `InvalidValueException`, and provides appropriate error responses.
+ * - Logs payment operations and errors.
+ */
+
+
 @RequiredArgsConstructor
 @RestController
 public class PaymentController {
