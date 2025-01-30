@@ -9,6 +9,5 @@ import java.util.UUID;
  * - Used to process and validate payments for orders.
  */
 
-
 public record PayDTO(UUID code, BigDecimal value) {
 }

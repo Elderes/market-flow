@@ -14,5 +14,4 @@ public record PaymentDTO(BigDecimal totalPrice,
                          LocalDateTime dateTimeOfPayment,
                          UUID orderId,
                          boolean hasPaid) {
-
 }
