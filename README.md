@@ -267,16 +267,16 @@ cd market-flow
 If you do not have **Git** installed, then just download the repository, extract it and go to the **root folder**.
 
 ### There are two ways to run the applications:
-#### Run all services at once:
+- **Run all services at once:**
 To just start all the project, you can go to the root directy of `market-flow` and execute the script `setup.ps1`.
 You can do it from a terminal if you prefer:
 ```bash
 .\setup_all.ps1
 ```
-#### Run one service a time:
+- **Run one service a time:**
 The other way is to run the services separately. You can acomplish this by following these steps:
 1. In the root directory of `market-flow`, you need to execute the `initiate_databases` script first.
-2. Then you can go to the folder of the service you want to start and execute the `service_name_here` script.
+2. Then you can go to the folder of the service you want to start and execute the `service_name_here.ps1` script.
 You can do it from a terminal if you prefer:
 ```bash
 .\initiate_databases.ps1
