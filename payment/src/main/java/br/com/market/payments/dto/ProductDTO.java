@@ -9,5 +9,7 @@ import java.util.UUID;
  * - Used to track and manage product-related information in an order.
  */
 
-public record ProductDTO(String name, Integer quantity, BigDecimal unitPrice){
+public record ProductDTO(String name,
+                         Integer quantity,
+                         BigDecimal unitPrice){
 }
