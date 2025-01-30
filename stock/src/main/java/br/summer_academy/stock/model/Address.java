@@ -1,9 +1,13 @@
 package br.summer_academy.stock.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.UUID;
 
-import lombok.Data;
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class Address {
     private UUID id;

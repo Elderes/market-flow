@@ -17,13 +17,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.SimpleMailMessage;
 
-@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 class SendServiceTest {
 
@@ -35,9 +32,6 @@ class SendServiceTest {
 
     @InjectMocks
     private SendService sendService;
-
-    @Value("${spring.mail.username}")
-    private String emailFrom;
 
     private SendModel sendModel;
     private StatusDTO statusDTO;
@@ -55,31 +49,46 @@ class SendServiceTest {
 
     @Test
     void testSendEmail_Success() {
+        // Simulando o envio de e-mail sem erros
         doNothing().when(mailSender).send(any(SimpleMailMessage.class));
+
         sendService.sendEmail(sendModel);
-        verify(mailSender, times(1)).send(any(SimpleMailMessage.class));
+
+        verify(mailSender, times(1)).send(any(SimpleMailMessage.class));  // Verifica se o e-mail foi enviado uma vez
     }
 
     @Test
     void testSendEmail_Failure() {
+        // Simulando falha no envio de e-mail
         doThrow(new MailException("Email error") {}).when(mailSender).send(any(SimpleMailMessage.class));
+
+        // Certificando que a falha não gera exceção inesperada
         assertDoesNotThrow(() -> sendService.sendEmail(sendModel));
-        verify(mailSender, times(1)).send(any(SimpleMailMessage.class));
+
+        verify(mailSender, times(1)).send(any(SimpleMailMessage.class));  // Verifica se o e-mail foi tentado
     }
 
     @Test
     void testSaveSend() {
+        // Simulando comportamento do repositório
         when(sendRepository.save(any(SendModel.class))).thenReturn(sendModel);
         when(sendRepository.findById(sendModel.getId())).thenReturn(Optional.of(sendModel));
 
+        // Testa a operação de salvar sem exceção
         assertDoesNotThrow(() -> sendService.saveSend(statusDTO));
+
+        // Verifica que o método save foi chamado uma vez
         verify(sendRepository, times(1)).save(any(SendModel.class));
     }
 
     @Test
     void testFindById_Success() {
+        // Simulando que o repositório encontra o sendModel
         when(sendRepository.findById(sendModel.getId())).thenReturn(Optional.of(sendModel));
+
         SendModel result = sendService.findById(sendModel.getId());
+
+        // Verificando se o resultado é o esperado
         assertNotNull(result);
         assertEquals(sendModel.getId(), result.getId());
     }
@@ -87,14 +96,24 @@ class SendServiceTest {
     @Test
     void testFindById_NotFound() {
         UUID id = UUID.randomUUID();
+        // Simulando que o repositório não encontra o sendModel
         when(sendRepository.findById(id)).thenReturn(Optional.empty());
+
+        // Verificando se a exceção é lançada quando o item não é encontrado
         assertThrows(SendNotFoundException.class, () -> sendService.findById(id));
     }
 
     @Test
     void testGetAllSends() {
+        // Simulando que o repositório retorna uma lista com um sendModel
         when(sendRepository.findAll()).thenReturn(List.of(sendModel));
-        assertFalse(sendService.getAllSends().isEmpty());
+
+        List<SendModel> result = sendService.getAllSends();
+
+        // Verificando que a lista não está vazia
+        assertFalse(result.isEmpty());
+
+        // Verifica se o método findAll foi chamado uma vez
         verify(sendRepository, times(1)).findAll();
     }
 }

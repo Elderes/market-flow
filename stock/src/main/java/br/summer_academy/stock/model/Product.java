@@ -3,6 +3,7 @@ package br.summer_academy.stock.model;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -12,8 +13,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Data;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Data
 @Entity
 @Table(name = "tb_product")
