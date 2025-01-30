@@ -258,7 +258,7 @@ How to Update the PATH Variable (Windows)
    - `C:\path\to\mysql\bin`
 5. Click **OK** to save.
 
-## Step 2: Clone the Repository  
+### Step 2: Clone the Repository  
 If you have **Git installed**, run:  
 ```bash
 git clone https://github.com/Elderes/market-flow.git
