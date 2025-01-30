@@ -211,7 +211,7 @@ RabbitMQ acts as the backbone of communication between services. Key exchange an
   - `exchange.fanout`: For broadcast events.
 
 - **Queues**:
-  - `queue.payment.order`: New orders will arrive at 'Payment' service through ``exchange.fanout``.
+  - `queue.payment.order`: New orders will arrive at 'Payment' service through `exchange.fanout`.
   - `queue.stock.order`: Orders newly created will be set to 'Stock' service through `exchange.fanout`.
   - `queue.payment.stock`: Processed orders from stock will be sent to 'Payment' service.
   - `queue.payment.order.pay`: 'Payment' and 'Order' services queue of monetary communcation.
@@ -233,7 +233,7 @@ Each service has its own database schema in **MySQL**, following the **Database 
 
 ## Setup
 
-### Step 1: Ensure Prerequisites  
+### Ensure Prerequisites  
 Make sure the following tools are installed and properly configured on your system:
 
 - **Java (JDK 8 or higher):**  
@@ -258,7 +258,7 @@ How to Update the PATH Variable (Windows)
    - `C:\path\to\mysql\bin`
 5. Click **OK** to save.
 
-### Step 2: Clone the Repository  
+### Clone the Repository  
 If you have **Git installed**, run:  
 ```bash
 git clone https://github.com/Elderes/market-flow.git
@@ -266,7 +266,14 @@ cd market-flow
 ```
 If you do not have **Git** installed, then just download the repository, extract it, go to the **root folder** and open a **command line interface**.
 
-### Step 3: Run the Setup Script 
+### There are two ways to run the applications:
+#### Run all services at once:
+To just start all the project, you can go to the root directy of `market-flow` and execute the script `setup.ps1`.
+You can do it from a terminal if you prefer:
 ```bash
 .\setup.ps1
 ```
+#### Run one service a time:
+The other way is to run the services separately. You can acomplish this by following these steps:
+1. In the root directory of `market-flow`, you need to execute the `initialize_databases` script first.
+2. Then you can go to the folder of the service you want to start and execute the `service_name_here` script.
