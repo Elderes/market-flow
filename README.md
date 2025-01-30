@@ -99,7 +99,16 @@ These services communicate asynchronously using RabbitMQ, ensuring decoupling an
   - Calculate total value of order.
   - Updates stock based on order events.
 - **Endpoints**:
-  - To-do.
+  - `GET /products`: Retrieves a list of all orders.
+    - Response:
+      - 200 OK: Returns a list of all orders.
+      - 404 Not Found: No orders found.
+- **Running the Service**
+  - Database: Ensure a database (MySQL) is connected for storing payment data.
+  -  Java: Ensure you have JDK 21 or above installed.
+  -  RabbitMQ: Ensure RabbitMQ is configured for message consumption.
+- **To start application**
+  - http://localhost:8081/swagger-ui/index.html#
 
 ### Payment Service
 - **Responsibilities**:
@@ -224,7 +233,17 @@ Each service has its own database schema in **MySQL**, following the **Database 
 
 ## Setup
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Elderes/market-flow.git
-   cd market-flow
+Step 1: Run the Setup Script  
+You can start the application automatically by running the `setup.ps1` script from the root directory.
+
+Step 2: Prerequisites  
+Ensure the following tools are installed and properly configured on your system:  
+- **Maven:** Ensure it is available in the `PATH` system variable.  
+- **MySQL:** Properly configured and accessible via the `PATH` system variable.
+
+Step 3: Installation Steps  
+Once the prerequisites are verified, follow these steps to set up the project:  
+```bash
+git clone https://github.com/Elderes/market-flow.git
+cd market-flow
+.\setup.ps1
