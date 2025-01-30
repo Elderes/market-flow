@@ -1,5 +1,6 @@
 package br.com.market.payments.model;
 
+import br.com.market.payments.model.PaymentModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
