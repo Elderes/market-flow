@@ -223,11 +223,11 @@ RabbitMQ acts as the backbone of communication between services. Key exchange an
 
 Each service has its own database schema in **MySQL**, following the **Database Per Service** pattern.
 
-- **Order Service**: `orders` table.
-- **Stock Service**: `products` table.
-- **Payment Service**: `payments` table.
-- **Send Service**: `dispatch` table.
-- **Status Service**: `order_status` table.
+- **Order Service**: `tb_order`, `tb_client` and `tb_address` tables.
+- **Stock Service**: `tb_product` table.
+- **Payment Service**: `tb_payment` table.
+- **Send Service**: `tb_send` table.
+- **Status Service**: `tb_status` table.
 
 ---
 
