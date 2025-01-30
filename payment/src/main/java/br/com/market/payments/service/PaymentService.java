@@ -142,7 +142,7 @@ public class PaymentService {
             message.setTo(paymentModel.getEmailClient());
             message.setFrom(emailFrom);
             message.setSubject("Pagamento recusado!");
-            message.setText("Seu pagamento foi recusado! Valor recebido é menor que o valor total do pedido!\nTente pagar novamente\nCódigo de pagamento: " + paymentModel.getId() + " \nValor do pedido:" + paymentModel.getTotalPrice().setScale(2) + "R$.");
+            message.setText("Seu pagamento foi recusado por causa de valor indevido!\nTente pagar novamente\nCódigo de pagamento: " + paymentModel.getId() + " \nValor do pedido:" + paymentModel.getTotalPrice().setScale(2) + "R$.");
 
             mailSender.send(message);
         } catch (MailException e) {
