@@ -264,7 +264,7 @@ If you have **Git installed**, run:
 git clone https://github.com/Elderes/market-flow.git
 cd market-flow
 ```
-If you do not have **Git** installed, then just download the repository, extract it, go to the **root folder** and open a **command line interface**.
+If you do not have **Git** installed, then just download the repository, extract it and go to the **root folder**.
 
 ### There are two ways to run the applications:
 #### Run all services at once:
