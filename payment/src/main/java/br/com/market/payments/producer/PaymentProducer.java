@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
  * - This component interacts with the messaging system to notify other services about the payment status.
  */
 
-
 @RequiredArgsConstructor
 @Component
 public class PaymentProducer {
@@ -29,4 +28,3 @@ public class PaymentProducer {
         rabbitTemplate.convertAndSend(exchange, routingKey, payment);
     }
 }
-    
