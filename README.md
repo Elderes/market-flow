@@ -233,17 +233,40 @@ Each service has its own database schema in **MySQL**, following the **Database 
 
 ## Setup
 
-Step 1: Run the Setup Script  
-You can start the application automatically by running the `setup.ps1` script from the root directory.
+### Step 1: Ensure Prerequisites  
+Make sure the following tools are installed and properly configured on your system:
 
-Step 2: Prerequisites  
-Ensure the following tools are installed and properly configured on your system:  
-- **Maven:** Ensure it is available in the `PATH` system variable.  
-- **MySQL:** Properly configured and accessible via the `PATH` system variable.
+- **Java (JDK 8 or higher):**  
+  - Download and install from the [official website](https://www.oracle.com/java/technologies/javase-jdk-downloads.html).
+  - Add `JAVA_HOME` to your system's environment variables and update the `PATH` to include `JAVA_HOME/bin`.
 
-Step 3: Installation Steps  
-Once the prerequisites are verified, follow these steps to set up the project:  
+- **Maven:**  
+  - Download from the [official website](https://maven.apache.org/download.cgi).
+  - Add the `MAVEN_HOME` environment variable and update the `PATH` to include `MAVEN_HOME/bin`.
+
+- **MySQL:**  
+  - Install from the [official MySQL website](https://dev.mysql.com/downloads/).
+  - Ensure the `bin` directory of your MySQL installation is added to the `PATH` system variable.
+
+How to Update the PATH Variable (Windows)
+1. Open **System Properties** (press `Win + S`, type *Environment Variables*, and select *Edit the system environment variables*).
+2. Click **Environment Variables**.
+3. Under **System Variables**, select `PATH`, and click **Edit**.
+4. Add the required paths for Java, Maven, and MySQL:
+   - `C:\path\to\jdk\bin`
+   - `C:\path\to\maven\bin`
+   - `C:\path\to\mysql\bin`
+5. Click **OK** to save.
+
+### Step 2: Clone the Repository  
+If you have **Git installed**, run:  
 ```bash
 git clone https://github.com/Elderes/market-flow.git
 cd market-flow
+```
+If you do not have **Git** installed, then just download the repository, extract it, go to the **root folder** and open a **command line interface**.
+
+### Step 3: Run the Setup Script 
+```bash
 .\setup.ps1
+```
