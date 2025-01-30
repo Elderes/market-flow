@@ -85,7 +85,7 @@ public class PaymentService {
     public void pay(PayDTO payDTO) {
         var payment = findPaymentById(payDTO.code());
 
-        if (payment.getTotalPrice().compareTo(payDTO.value()) == 0) {
+        if (payment.getTotalPrice().compareTo(payDTO.value()) > 0) {
             logger.error("Payment amount less than total order amount!");
 
             sendErrorEmail(payment);
