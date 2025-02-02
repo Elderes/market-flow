@@ -96,7 +96,6 @@ These services communicate asynchronously using RabbitMQ, ensuring decoupling an
 ### Stock Service
 - **Responsibilities**:
   - Manages inventory levels.
-  - Calculate total value of order.
   - Updates stock based on order events.
 - **Endpoints**:
   - `GET /products`: Retrieves a list of all orders.
